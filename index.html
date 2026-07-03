@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&amp;family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400;1,6..72,500&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#16130f}
+html[data-motion="aus"] *{animation:none !important;transition:none !important}
+@keyframes trackmove{from{background-position:0 0}to{background-position:-26px 0}}
+@keyframes pulsieren{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes fahrt{0%{left:-8%}100%{left:104%}}
+@keyframes blinken{0%,55%{opacity:1}56%,100%{opacity:0}}
+@keyframes glimmer{0%,100%{opacity:.4}50%{opacity:1}}
+::selection{background:#C33D2E;color:#f4f1ea}
+::-webkit-scrollbar{height:8px}
+::-webkit-scrollbar-thumb{background:rgba(128,124,116,.4)}
+</style>
+</helmet>
+
+<div style="background:#16130f;font-family:Archivo,sans-serif;color:#f4f1ea">
+
+  <div id="fortschritt" style="position:fixed;top:0;left:0;right:0;height:3px;background:var(--akzent,#C33D2E);transform:scaleX(0);transform-origin:left;z-index:90"></div>
+
+  <div id="railnav" style="position:fixed;left:22px;top:50%;transform:translateY(-50%);z-index:80;display:flex;flex-direction:column;gap:11px">
+    <sc-for list="{{ rail }}" as="r" hint-placeholder-count="14">
+      <button data-railitem data-target="{{ r.id }}" onClick="{{ jump }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px"><span data-dot style="width:8px;height:8px;border-radius:50%;background:rgba(128,124,116,.55);display:block;transition:all .3s"></span><span data-lbl style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;color:rgba(128,124,116,.85);opacity:.7;transition:all .3s">{{ r.lbl }}</span></button>
+    </sc-for>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" data-sec data-screen-label="Hero — Gleis Null" style="position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding:90px 7vw 0">
+    <div style="position:absolute;right:-6vw;top:50%;transform:translateY(-54%);font-weight:900;font-size:44vw;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(244,241,234,.09);pointer-events:none;user-select:none">0</div>
+    <div style="position:relative;max-width:1160px;margin:0 auto;width:100%">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:34px">
+        <span style="width:9px;height:9px;border-radius:50%;background:var(--akzent,#C33D2E);animation:pulsieren 2.4s ease-in-out infinite"></span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.24em;color:rgba(244,241,234,.65)">SALZBURG · AIGLHOF → MAXGLAN · 3,4 KM · SEIT 1920</span>
+      </div>
+      <h1 style="margin:0;font-weight:900;font-size:clamp(72px,12.5vw,196px);line-height:.9;letter-spacing:-.035em">GLEIS<br><span style="color:transparent;-webkit-text-stroke:2.5px var(--akzent,#C33D2E)">NULL</span></h1>
+      <p style="font-family:Newsreader,serif;font-style:italic;font-weight:300;font-size:clamp(22px,2.6vw,34px);line-height:1.4;color:rgba(244,241,234,.9);max-width:22em;margin:40px 0 18px">Wo Salzburgs letzte Industriebahn zum Stillstand kommt, beginnt Europas nächste Linie.</p>
+      <p style="font-weight:700;font-size:clamp(20px,2.4vw,30px);line-height:1.2;letter-spacing:-.01em;margin:0 0 26px">Salzburg braucht keinen weiteren Campus.<br>Es braucht ein <span style="color:var(--akzent,#C33D2E)">Nervensystem</span>.</p>
+      <p style="font-size:16px;line-height:1.7;color:rgba(244,241,234,.6);max-width:60ch;margin:0">Gleis Null verwandelt eine stillgelegte Bahntrasse in eine <strong style="color:rgba(244,241,234,.85);font-weight:600">programmierbare Innovationslinie</strong> — 3,4 Kilometer, auf denen modulare Waggons zu Startup-Studios, Laboren, Corporate-Arenen, Kulturbühnen und Mobilitäts-Testfeldern werden. Salzburg wird Knoten null eines europäischen Netzes.</p>
+    </div>
+    <div style="position:relative;margin-top:auto;padding-top:56px">
+      <div style="height:16px;border-top:2px solid rgba(244,241,234,.4);border-bottom:2px solid rgba(244,241,234,.4);background:repeating-linear-gradient(90deg,transparent 0 19px,rgba(244,241,234,.3) 19px 26px);animation:trackmove 1.9s linear infinite"></div>
+      <div style="display:flex;justify-content:space-between;padding:14px 0 22px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:rgba(244,241,234,.45)">KONZEPTPROTOTYP · ARBEITSTITEL</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--akzent,#C33D2E);animation:blinken 1.6s step-end infinite">↓ EINSTEIGEN</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 01 BEFUND ============ -->
+  <section id="s1" data-sec data-screen-label="01 Der Befund" style="background:#f4f1ea;color:#16130f;padding:110px 7vw 120px">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">01 · DIE STUNDE NULL</span>
+        <span style="flex:1;height:1px;background:rgba(22,19,15,.15)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 26px;font-weight:800;font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.025em;max-width:14em">Ende 2026 rollt hier der letzte Güterzug.</h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .2s,transform .9s cubic-bezier(.22,1,.36,1) .2s;font-family:Newsreader,serif;font-style:italic;font-weight:400;font-size:clamp(21px,2.2vw,28px);line-height:1.45;color:rgba(22,19,15,.85);max-width:30em;margin:0 0 28px">Über hundert Jahre Industriegeschichte, mitten in der Stadt — und plötzlich ohne Aufgabe. Man kann das einen Verlust nennen. Oder die größte Chance, die Salzburg seit Jahrzehnten bekommen hat.</p>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .25s,transform .9s cubic-bezier(.22,1,.36,1) .25s;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:44px;max-width:1000px">
+        <p style="margin:0;font-size:17px;line-height:1.7;color:rgba(22,19,15,.78)">Die Stieglbrauerei stellt den Güterverkehr auf ihrer Trasse zwischen Lehen und Maxglan Ende 2026 auf LKW um. Eine innerstädtische Bahninfrastruktur droht zu verfallen und ihre Konzession zu verlieren. Gleichzeitig fehlt Salzburg — wie fast jeder europäischen Stadt — ein sichtbarer, physischer Ort, an dem sein Innovations-Ökosystem zusammenkommt.</p>
+        <p style="margin:0;font-size:17px;line-height:1.7;color:rgba(22,19,15,.78)">Der eigentliche Befund ist größer. Europa fehlt es nicht an Wissenschaft, nicht an Talent, nicht an Ideen. Es fehlt am <strong style="font-weight:700">Bindegewebe</strong>: an Dichte, an Tempo, an der Bereitschaft, Disziplinen kollidieren zu lassen. Wir forschen exzellent — und lassen andernorts skalieren. Kein Geldproblem. Ein Kultur- und Geschwindigkeitsproblem.</p>
+      </div>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:rgba(22,19,15,.15);border:1px solid rgba(22,19,15,.15);margin:70px 0 0">
+        <div style="background:#f4f1ea;padding:28px 26px"><div style="font-weight:900;font-size:clamp(40px,4vw,58px);letter-spacing:-.02em"><span data-count="3.4" data-dec="1">3,4</span><span style="font-size:.45em;font-weight:600"> km</span></div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:rgba(22,19,15,.55);margin-top:6px">TRASSE, MITTEN IN DER STADT</div></div>
+        <div style="background:#f4f1ea;padding:28px 26px"><div style="font-weight:900;font-size:clamp(40px,4vw,58px);letter-spacing:-.02em"><span data-count="1920" data-von="1880">1920</span></div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:rgba(22,19,15,.55);margin-top:6px">ERÖFFNET, 16. FEBRUAR</div></div>
+        <div style="background:#f4f1ea;padding:28px 26px"><div style="font-weight:900;font-size:clamp(40px,4vw,58px);letter-spacing:-.02em"><span data-count="9">9</span><span style="font-size:.45em;font-weight:600"> +1</span></div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:rgba(22,19,15,.55);margin-top:6px">BESTEHENDE GLEISANSCHLÜSSE</div></div>
+        <div style="background:#f4f1ea;padding:28px 26px"><div style="font-weight:900;font-size:clamp(40px,4vw,58px);letter-spacing:-.02em;color:var(--akzent,#C33D2E)"><span data-count="2026" data-von="1986">2026</span></div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:rgba(22,19,15,.55);margin-top:6px">LETZTER GÜTERZUG</div></div>
+      </div>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:80px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:rgba(22,19,15,.5);margin-bottom:26px">DIE TRASSE · SALZBURG AIGLHOF — STIEGLBRAUEREI</div>
+        <div style="position:relative;height:150px">
+          <div style="position:absolute;left:2%;right:2%;top:74px;height:2px;background:rgba(22,19,15,.35)"></div>
+          <div style="position:absolute;left:2%;top:68px;width:14px;height:14px;border-radius:50%;background:#16130f"></div>
+          <div style="position:absolute;left:2%;top:28px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:#16130f;font-weight:600">AIGLHOF</div>
+          <div style="position:absolute;left:2%;top:44px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(22,19,15,.55)">Anschluss ans Netz · 1,9 km zum Hbf</div>
+          <div style="position:absolute;left:13%;top:70px;width:8px;height:8px;border-radius:50%;background:rgba(22,19,15,.45)"></div>
+          <div style="position:absolute;left:21%;top:70px;width:8px;height:8px;border-radius:50%;background:rgba(22,19,15,.45)"></div>
+          <div style="position:absolute;left:29%;top:70px;width:8px;height:8px;border-radius:50%;background:rgba(22,19,15,.45)"></div>
+          <div style="position:absolute;left:37%;top:70px;width:8px;height:8px;border-radius:50%;background:rgba(22,19,15,.45)"></div>
+          <div style="position:absolute;left:57%;top:70px;width:8px;height:8px;border-radius:50%;background:rgba(22,19,15,.45)"></div>
+          <div style="position:absolute;left:65%;top:70px;width:8px;height:8px;border-radius:50%;background:rgba(22,19,15,.45)"></div>
+          <div style="position:absolute;left:73%;top:70px;width:8px;height:8px;border-radius:50%;background:rgba(22,19,15,.45)"></div>
+          <div style="position:absolute;left:81%;top:70px;width:8px;height:8px;border-radius:50%;background:rgba(22,19,15,.45)"></div>
+          <div style="position:absolute;left:88%;top:70px;width:8px;height:8px;border-radius:50%;background:rgba(22,19,15,.45)"></div>
+          <div style="position:absolute;left:13%;top:96px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(22,19,15,.55)">9 Industriebetriebe mit eigenem Gleisanschluss — fertige Andockpunkte</div>
+          <div style="position:absolute;left:46.5%;top:66px;width:16px;height:16px;transform:rotate(45deg);border:2px solid #16130f;background:#f4f1ea"></div>
+          <div style="position:absolute;left:44%;top:28px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:#16130f;font-weight:600">PANZERHALLE</div>
+          <div style="position:absolute;left:44%;top:44px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(22,19,15,.55)">bewiesener Anker, mitten an der Line</div>
+          <div style="position:absolute;left:95%;top:68px;width:14px;height:14px;background:var(--akzent,#C33D2E)"></div>
+          <div style="position:absolute;right:0;top:28px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:#16130f;font-weight:600;text-align:right">STIEGL</div>
+          <div style="position:absolute;right:0;top:44px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(22,19,15,.55);text-align:right">seit 1492 · Endpunkt der Trasse</div>
+        </div>
+        <p style="margin:18px 0 0;font-size:15px;line-height:1.7;color:rgba(22,19,15,.65);max-width:70ch">Normalspurig, eingleisig, seit 1988 offiziell für Personenverkehr zugelassen. Angebunden ans nationale Netz — kein isoliertes Gleis, sondern Infrastruktur mit Anschluss. Und mit politischem Rückenwind: Zu einer Machbarkeitsstudie für Personenverkehr äußerten sich Stadt und Land bereits vorsichtig positiv.</p>
+      </div>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:64px">
+        <img src="assets/ist-trasse.jpg" alt="Die Stieglbahn heute: die rote SLB-Diesellok auf dem eingleisigen, teils überwachsenen Gleis mitten in der Stadt" style="display:block;width:100%;height:480px;object-fit:cover;object-position:center 40%">
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:10px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(22,19,15,.5)">ABB. 01 — DIE TRASSE HEUTE, IST-ZUSTAND · LEHEN / MAXGLAN</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(22,19,15,.35)">FOTO: DEEF · RAILWAY RESEARCH AUSTRIA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 DER SPRUNG ============ -->
+  <section id="sprung" data-sec data-screen-label="02 Der Sprung" style="background:#16130f;color:#f4f1ea;padding:120px 7vw 130px;border-top:1px solid rgba(244,241,234,.1)">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">02 · DER SPRUNG</span>
+        <span style="flex:1;height:1px;background:rgba(244,241,234,.18)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 30px;font-weight:800;font-size:clamp(40px,5.4vw,78px);line-height:1;letter-spacing:-.025em;max-width:15em">Kein Ort, an dem Innovation passiert.<br><span style="color:var(--akzent,#C33D2E)">Eine Maschine, die sie bewegt.</span></h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .18s,transform .9s cubic-bezier(.22,1,.36,1) .18s;font-family:Newsreader,serif;font-style:italic;font-size:clamp(20px,2.2vw,28px);line-height:1.45;color:rgba(244,241,234,.88);max-width:34em;margin:0 0 48px">Die Schiene ist nicht Kulisse — die Schiene ist das Produkt. Die Waggons sind nicht Deko — sie sind ausführbare Module. Jede Saison ein neues Release. Jede Stadt kann das Modell forken.</p>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin:0 0 64px">
+        <img src="assets/konzept-overview.png" alt="Handgezeichnete Konzeptübersicht: Gleis Null als Salzburgs Innovations-Nervensystem — Linie statt Campus, physische API, Waggons als Cartridges, 100-Tage-Takt und Vier-Seiten-Markt" style="display:block;width:100%;height:auto;border:1px solid rgba(244,241,234,.15);background:#f4f1ea">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(244,241,234,.45);margin-top:10px">ABB. — DAS KONZEPT AUF EINEN BLICK</div>
+      </div>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-bottom:20px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:rgba(244,241,234,.5)">DIE STADT ALS NERVENSYSTEM</div>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .05s,transform .9s cubic-bezier(.22,1,.36,1) .05s;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:rgba(244,241,234,.18);border:1px solid rgba(244,241,234,.18)">
+        <div style="background:#16130f;padding:28px 26px"><div style="font-weight:800;font-size:20px;letter-spacing:-.01em">Die Schiene</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--akzent,#C33D2E);margin-top:8px">= DAS RÜCKGRAT</div></div>
+        <div style="background:#16130f;padding:28px 26px"><div style="font-weight:800;font-size:20px;letter-spacing:-.01em">Die Waggons</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--akzent,#C33D2E);margin-top:8px">= DIE ORGANE</div></div>
+        <div style="background:#16130f;padding:28px 26px"><div style="font-weight:800;font-size:20px;letter-spacing:-.01em">Die Stationen</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--akzent,#C33D2E);margin-top:8px">= DIE SYNAPSEN</div></div>
+        <div style="background:#16130f;padding:28px 26px"><div style="font-weight:800;font-size:20px;letter-spacing:-.01em">Die Menschen</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--akzent,#C33D2E);margin-top:8px">= DER PULS</div></div>
+      </div>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin:22px 0 0;font-family:Newsreader,serif;font-style:italic;font-size:22px;color:rgba(244,241,234,.8)">Die Stadt lernt, indem sie sich bewegt.</p>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:78px;display:grid;grid-template-columns:minmax(240px,4fr) minmax(300px,6fr);gap:54px;align-items:start">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:rgba(244,241,234,.5);margin-bottom:16px">DIE TRASSE ALS PHYSISCHE API</div>
+          <p style="margin:0;font-size:17px;line-height:1.7;color:rgba(244,241,234,.8)">Weniger Immobilie, mehr Protokoll. Jeder Akteur verbindet sich über eine definierte Schnittstelle — sichtbar, programmierbar, auf Schienen. So wird aus einem Standort ein Betriebssystem für Innovation.</p>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13.5px;line-height:1.5">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:14px;padding:14px 0;border-top:1px solid rgba(244,241,234,.14)"><span style="color:var(--akzent,#C33D2E);font-weight:600">UNIVERSITÄTEN</span><span style="color:rgba(244,241,234,.75)">→ veröffentlichen Forschungs-Challenges</span></div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:14px;padding:14px 0;border-top:1px solid rgba(244,241,234,.14)"><span style="color:var(--akzent,#C33D2E);font-weight:600">STARTUPS</span><span style="color:rgba(244,241,234,.75)">→ belegen Waggons als Module</span></div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:14px;padding:14px 0;border-top:1px solid rgba(244,241,234,.14)"><span style="color:var(--akzent,#C33D2E);font-weight:600">CORPORATES</span><span style="color:rgba(244,241,234,.75)">→ sponsern Stationen, starten echte Probleme</span></div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:14px;padding:14px 0;border-top:1px solid rgba(244,241,234,.14)"><span style="color:var(--akzent,#C33D2E);font-weight:600">VCs</span><span style="color:rgba(244,241,234,.75)">→ betreiben Deal-Flow-Fenster</span></div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:14px;padding:14px 0;border-top:1px solid rgba(244,241,234,.14)"><span style="color:var(--akzent,#C33D2E);font-weight:600">BÜRGER:INNEN</span><span style="color:rgba(244,241,234,.75)">→ treten über Kultur, Gastro und Demos ein</span></div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:14px;padding:14px 0;border-top:1px solid rgba(244,241,234,.14);border-bottom:1px solid rgba(244,241,234,.14)"><span style="color:var(--akzent,#C33D2E);font-weight:600">DIE STADT</span><span style="color:rgba(244,241,234,.75)">→ nutzt den Korridor als reale Testfläche</span></div>
+        </div>
+      </div>
+
+      <blockquote data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin:80px 0 0;padding:0 0 0 30px;border-left:3px solid var(--akzent,#C33D2E);font-family:Newsreader,serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,40px);line-height:1.28;color:#f4f1ea;max-width:20em">Gleis Null verwandelt tote Infrastruktur in lebendige ökonomische Intelligenz.</blockquote>
+    </div>
+  </section>
+
+  <!-- ============ 03 LINIE ============ -->
+  <section id="s2" data-sec data-screen-label="03 Linie statt Campus" style="background:#f4f1ea;color:#16130f;padding:110px 7vw 120px;border-top:1px solid rgba(22,19,15,.12)">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">03 · DIE FORM</span>
+        <span style="flex:1;height:1px;background:rgba(22,19,15,.15)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 60px;font-weight:800;font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.025em;max-width:15em">Ein Campus ist ein Behälter.<br><span style="color:var(--akzent,#C33D2E)">Eine Linie ist ein Versprechen.</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:44px;align-items:start">
+        <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s">
+          <div style="height:150px;display:flex;align-items:center;justify-content:center;border:1px dashed rgba(22,19,15,.3)">
+            <div style="width:84px;height:84px;border:2px solid rgba(22,19,15,.5);display:flex;align-items:center;justify-content:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(22,19,15,.55)">CAMPUS</span></div>
+          </div>
+          <p style="margin:20px 0 0;font-size:16px;line-height:1.7;color:rgba(22,19,15,.7)">Man geht hinein — und bleibt in seinem Silo. Behälter sortieren Disziplinen sauber voneinander weg. Genau das ist Europas Problem, nicht seine Lösung.</p>
+        </div>
+        <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .22s,transform .9s cubic-bezier(.22,1,.36,1) .22s">
+          <div style="height:150px;display:flex;align-items:center;border:1px dashed rgba(22,19,15,.3);padding:0 26px;position:relative">
+            <div style="position:relative;width:100%;height:2px;background:#16130f">
+              <div style="position:absolute;left:0%;top:-5px;width:12px;height:12px;border-radius:50%;background:var(--akzent,#C33D2E)"></div>
+              <div style="position:absolute;left:31%;top:-5px;width:12px;height:12px;border-radius:50%;background:#16130f"></div>
+              <div style="position:absolute;left:62%;top:-5px;width:12px;height:12px;border-radius:50%;background:var(--akzent,#C33D2E)"></div>
+              <div style="position:absolute;right:0;top:-5px;width:12px;height:12px;border-radius:50%;background:#16130f"></div>
+              <span style="position:absolute;left:0;top:18px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(22,19,15,.55)">LINIE — ERZWUNGENE NACHBARSCHAFT</span>
+            </div>
+          </div>
+          <p style="margin:20px 0 0;font-size:16px;line-height:1.7;color:rgba(22,19,15,.7)">Eine Linie erzwingt Bewegung und Begegnung. Der KI-Mensch geht am MedTech-Menschen vorbei, am Kapitalgeber, am Café. Diese Reibung ist der eigentliche Wert — nicht die Waggons.</p>
+        </div>
+      </div>
+      <blockquote data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin:70px 0 0;padding:0 0 0 28px;border-left:3px solid var(--akzent,#C33D2E);font-family:Newsreader,serif;font-style:italic;font-weight:400;font-size:clamp(21px,2.2vw,28px);line-height:1.45;color:rgba(22,19,15,.85);max-width:32em">Der Ort baut physisch das Bindegewebe nach, das Europa im Übertragenen fehlt. High Line im Geist, nicht in der Bauform: ebenerdig, grün, begehbar — ein Band, das Lehen und Maxglan verbindet.</blockquote>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:70px">
+        <img src="assets/gleis0.png" alt="Gleis Null — die Stiegltrasse als Innovation Flow: illustrierte Vision des Korridors von Netzanschluss über Panzerhalle und Kreativpark bis zur Stieglbrauerei" style="display:block;width:100%;height:auto;border:1px solid rgba(22,19,15,.15)">
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:10px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(22,19,15,.5)">ABB. 00 — DIE VISION: DIE STIEGLTRASSE ALS INNOVATION FLOW</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(22,19,15,.35)">NETZANSCHLUSS → PANZERHALLE → KREATIVPARK → STIEGL</span>
+        </div>
+      </div>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:44px;margin-top:60px;max-width:1000px">
+        <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(22,19,15,.7)"><strong style="font-weight:700">Rhythmus statt Riegel.</strong> Dichte Innovationsknoten aus Waggonclustern wechseln mit offenen, grünen Verbindungsräumen. Der Grünlandabschnitt bleibt Promenade, Aufenthalt, Puffer — der ökologische Gegenpol und ein Stück Legitimität gegenüber Stadt und Anrainern.</p>
+        <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(22,19,15,.7)"><strong style="font-weight:700">Kein Start bei null.</strong> Mitten an der Trasse, in Maxglan, liegt mit der Panzerhalle bereits ein bewiesener Umnutzungsort — das natürliche Schwergewicht im Herzen der Line. Sie dockt an etwas an, das lokal funktioniert: für Geldgeber und Behörden der Unterschied zwischen Reißbrett und Andockmanöver.</p>
+      </div>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:64px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:rgba(22,19,15,.5);margin-bottom:20px">DER GRÜNLANDABSCHNITT · HEUTE UND MORGEN</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px">
+          <div>
+            <div style="position:relative">
+              <img src="assets/gruenland-heute.jpg" alt="Die Stieglbahn heute im Grünland: eingleisige Strecke durch Wiesen, im Hintergrund der Untersberg" style="display:block;width:100%;height:340px;object-fit:cover">
+              <span style="position:absolute;top:12px;left:12px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;background:#16130f;color:#f4f1ea;padding:5px 10px">HEUTE</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-top:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(22,19,15,.5)">ABB. 02 — DIE TRASSE IM GRÜNLAND</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(22,19,15,.35)">FOTO: DEEF · RRA</span></div>
+          </div>
+          <div>
+            <div style="position:relative">
+              <img src="assets/vision-promenade.png" alt="Vision: das grüne Band als begehbare Promenade mit Café-Waggon, Lichterketten und wildem Grün entlang des Gleises" style="display:block;width:100%;height:340px;object-fit:cover">
+              <span style="position:absolute;top:12px;left:12px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;background:var(--akzent,#C33D2E);color:#f4f1ea;padding:5px 10px">MORGEN</span>
+            </div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(22,19,15,.5);margin-top:10px">ABB. 03 — DAS GRÜNE BAND ALS PROMENADE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 MODULE ============ -->
+  <section id="module" data-sec data-screen-label="04 Die Module" style="background:#ece8de;color:#16130f;padding:110px 7vw 120px;border-top:1px solid rgba(22,19,15,.12)">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">04 · DIE MODULE</span>
+        <span style="flex:1;height:1px;background:rgba(22,19,15,.15)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 22px;font-weight:800;font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.025em;max-width:13em">Jeder Waggon ist ein Modul.</h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .18s,transform .9s cubic-bezier(.22,1,.36,1) .18s;font-family:Newsreader,serif;font-style:italic;font-size:clamp(19px,2vw,25px);line-height:1.45;color:rgba(22,19,15,.8);max-width:36em;margin:0 0 20px">Nicht „Büros in Waggons" — das ist zu klein gedacht. Module lassen sich tauschen, thematisch belegen, mieten, bewegen und neu kombinieren. Ein physischer App Store für Innovation.</p>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .22s,transform .9s cubic-bezier(.22,1,.36,1) .22s;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:rgba(22,19,15,.5);margin:0 0 30px">WAGGON WÄHLEN → MODUL ANZEIGEN</p>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .26s,transform .9s cubic-bezier(.22,1,.36,1) .26s;overflow-x:auto;padding-bottom:14px">
+        <div style="display:flex;align-items:flex-end;gap:6px;min-width:min-content;position:relative;padding-top:10px">
+          <div style="position:absolute;left:0;right:0;bottom:6px;height:3px;background:rgba(22,19,15,.35)"></div>
+          <div style="width:34px;height:26px;background:#16130f;border-radius:5px 5px 3px 3px;margin-right:2px;flex:none"></div>
+          <sc-for list="{{ module }}" as="m" hint-placeholder-count="7">
+            <button onClick="{{ waehleModul }}" data-i="{{ $index }}" style="all:unset;cursor:pointer;flex:none;display:flex;flex-direction:column;align-items:center;gap:9px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;color:{{ m.lblcol }};white-space:nowrap;transition:color .25s">{{ m.name }}</span>
+              <span style="position:relative;display:flex;align-items:center;justify-content:center;gap:6px;width:118px;height:62px;background:{{ m.bg }};border:2px solid #16130f;border-radius:7px;transition:all .25s">
+                <span style="width:20px;height:18px;background:{{ m.win }};border-radius:2px"></span>
+                <span style="width:20px;height:18px;background:{{ m.win }};border-radius:2px"></span>
+              </span>
+              <span style="display:flex;gap:34px"><span style="width:12px;height:12px;border-radius:50%;background:#16130f"></span><span style="width:12px;height:12px;border-radius:50%;background:#16130f"></span></span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="border-top:2px solid #16130f;margin-top:24px;padding-top:34px;display:grid;grid-template-columns:minmax(220px,1fr) minmax(300px,2fr);gap:44px;align-items:start;min-height:220px">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E);margin-bottom:12px">{{ modTag }}</div>
+          <div style="font-weight:800;font-size:clamp(26px,3vw,40px);letter-spacing:-.02em;line-height:1.04">{{ modName }}-MODUL</div>
+          <div style="font-family:Newsreader,serif;font-style:italic;font-size:21px;line-height:1.35;color:rgba(22,19,15,.72);margin-top:16px">{{ modClaim }}</div>
+        </div>
+        <p style="margin:0;font-size:17px;line-height:1.75;color:rgba(22,19,15,.82)">{{ modText }}</p>
+      </div>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin:46px 0 0;font-size:15px;line-height:1.7;color:rgba(22,19,15,.6);max-width:74ch;border-top:1px solid rgba(22,19,15,.15);padding-top:22px">Das hält die Linie lebendig: nicht einmal vermietet und eingefroren, sondern ständig neu belegt. Manche Module sind fix, manche wandern — und manche reisen sogar in andere Städte des Netzes.</p>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:48px">
+        <img src="assets/vision-module.png" alt="Vision: bespielte Module entlang des Gleises — Promenade und Radweg auf der einen, Waggon-Arbeitsräume und Aufenthaltsdecks mit Sitzgruppen auf der anderen Seite" style="display:block;width:100%;height:auto;border:1px solid rgba(22,19,15,.15)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(22,19,15,.5);margin-top:10px">ABB. 05 — MODULE IM ALLTAG: ARBEITEN, AUFHALTEN, VORBEIGEHEN</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 MARKT ============ -->
+  <section id="s3" data-sec data-screen-label="05 Vier Marktseiten" style="background:#f4f1ea;color:#16130f;padding:110px 7vw 120px;border-top:1px solid rgba(22,19,15,.12)">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">05 · DER MARKT</span>
+        <span style="flex:1;height:1px;background:rgba(22,19,15,.15)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 22px;font-weight:800;font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.025em">Vier Seiten. Ein Band.</h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .18s,transform .9s cubic-bezier(.22,1,.36,1) .18s;font-family:Newsreader,serif;font-style:italic;font-size:clamp(19px,2vw,25px);line-height:1.45;color:rgba(22,19,15,.8);max-width:32em;margin:0 0 46px">Das Modell trägt, weil vier Seiten eines Marktes an einem Ort kollidieren — und jede eine klare Rolle hat.</p>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .22s,transform .9s cubic-bezier(.22,1,.36,1) .22s;display:flex;flex-wrap:wrap;gap:10px;margin-bottom:0">
+        <sc-for list="{{ seiten }}" as="s" hint-placeholder-count="4">
+          <button onClick="{{ waehleSeite }}" data-i="{{ $index }}" style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.1em;padding:13px 22px;cursor:pointer;border:1px solid rgba(22,19,15,.45);border-radius:0;background:{{ s.bg }};color:{{ s.col }};transition:all .25s">{{ s.name }}</button>
+        </sc-for>
+      </div>
+      <div style="border-top:2px solid #16130f;margin-top:34px;padding-top:34px;display:grid;grid-template-columns:minmax(200px,1fr) minmax(300px,2fr);gap:44px;align-items:start;min-height:220px">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E);margin-bottom:10px">{{ seiteRolle }}</div>
+          <div style="font-weight:800;font-size:clamp(28px,3vw,42px);letter-spacing:-.02em;line-height:1.05">{{ seiteName }}</div>
+          <div style="font-family:Newsreader,serif;font-style:italic;font-size:20px;color:rgba(22,19,15,.7);margin-top:16px">{{ seitePunkt }}</div>
+        </div>
+        <p style="margin:0;font-size:17px;line-height:1.75;color:rgba(22,19,15,.8)">{{ seiteText }}</p>
+      </div>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin:46px 0 0;font-size:15px;line-height:1.7;color:rgba(22,19,15,.6);max-width:70ch;border-top:1px solid rgba(22,19,15,.15);padding-top:22px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:rgba(22,19,15,.5)">DIE ROLLENTRENNUNG · </span>Unis liefern die Quelle, Startups den Content, Corporates die Nachfrage, VCs das Kapital — und ein privater Operator kuratiert und betreibt. So entsteht ein Ökosystem, kein Gemischtwarenladen.</p>
+    </div>
+  </section>
+
+  <!-- ============ 06 ZYKLUS ============ -->
+  <section id="zyklus" data-sec data-screen-label="06 Der 100-Tage-Zyklus" style="background:#16130f;color:#f4f1ea;padding:120px 7vw 130px;border-top:1px solid rgba(244,241,234,.1)">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">06 · DER TAKT</span>
+        <span style="flex:1;height:1px;background:rgba(244,241,234,.18)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 22px;font-weight:800;font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.025em;max-width:15em">Alle 100 Tage programmiert sich Gleis Null neu.</h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .18s,transform .9s cubic-bezier(.22,1,.36,1) .18s;font-family:Newsreader,serif;font-style:italic;font-size:clamp(19px,2vw,25px);line-height:1.45;color:rgba(244,241,234,.85);max-width:34em;margin:0 0 46px">Ein Ritual, wiederholbar, medientauglich, kommerziell nutzbar. Jeder Zyklus hat ein Thema — und endet mit einem Line Demo Day. Eine Maschine für Momentum.</p>
+
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .2s,transform .9s cubic-bezier(.22,1,.36,1) .2s;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:rgba(244,241,234,.5);margin:0 0 16px">THEMA DES ZYKLUS WÄHLEN</p>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .24s,transform .9s cubic-bezier(.22,1,.36,1) .24s;display:flex;flex-wrap:wrap;gap:9px">
+        <sc-for list="{{ themen }}" as="t" hint-placeholder-count="6">
+          <button onClick="{{ waehleThema }}" data-i="{{ $index }}" style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;padding:11px 17px;cursor:pointer;border:1px solid rgba(244,241,234,.35);background:{{ t.bg }};color:{{ t.col }};transition:all .25s">{{ t.name }}</button>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:40px;border:1px solid rgba(244,241,234,.2);padding:32px 34px;background:rgba(0,0,0,.25)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--akzent,#C33D2E);margin-bottom:12px">ZYKLUS-THEMA · 100 TAGE</div>
+        <div style="font-weight:800;font-size:clamp(26px,3.2vw,42px);letter-spacing:-.02em;line-height:1.05;margin-bottom:14px">{{ themaName }}</div>
+        <p style="margin:0;font-family:Newsreader,serif;font-style:italic;font-size:20px;line-height:1.4;color:rgba(244,241,234,.82);max-width:44em">{{ themaBsp }}</p>
+      </div>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:56px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:rgba(244,241,234,.5);margin-bottom:26px">DER ABLAUF · IMMER GLEICH, THEMA NEU</div>
+        <div style="position:relative">
+          <div style="position:absolute;left:0;right:0;top:15px;height:2px;background:rgba(244,241,234,.2)"></div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;position:relative">
+            <div style="display:flex;flex-direction:column;gap:14px"><span style="width:32px;height:32px;border-radius:50%;border:2px solid var(--akzent,#C33D2E);background:#16130f;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--akzent,#C33D2E)">1</span><span style="font-size:14px;line-height:1.4;color:rgba(244,241,234,.8)">Corporates stellen echte Challenges</span></div>
+            <div style="display:flex;flex-direction:column;gap:14px"><span style="width:32px;height:32px;border-radius:50%;border:2px solid rgba(244,241,234,.3);background:#16130f;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:13px;color:rgba(244,241,234,.6)">2</span><span style="font-size:14px;line-height:1.4;color:rgba(244,241,234,.8)">Unis liefern Forschung &amp; IP</span></div>
+            <div style="display:flex;flex-direction:column;gap:14px"><span style="width:32px;height:32px;border-radius:50%;border:2px solid rgba(244,241,234,.3);background:#16130f;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:13px;color:rgba(244,241,234,.6)">3</span><span style="font-size:14px;line-height:1.4;color:rgba(244,241,234,.8)">Startups ziehen in die Waggons</span></div>
+            <div style="display:flex;flex-direction:column;gap:14px"><span style="width:32px;height:32px;border-radius:50%;border:2px solid rgba(244,241,234,.3);background:#16130f;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:13px;color:rgba(244,241,234,.6)">4</span><span style="font-size:14px;line-height:1.4;color:rgba(244,241,234,.8)">VCs erhalten kuratierten Zugang</span></div>
+            <div style="display:flex;flex-direction:column;gap:14px"><span style="width:32px;height:32px;border-radius:50%;border:2px solid rgba(244,241,234,.3);background:#16130f;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:13px;color:rgba(244,241,234,.6)">5</span><span style="font-size:14px;line-height:1.4;color:rgba(244,241,234,.8)">Bürger:innen sehen öffentliche Demos</span></div>
+            <div style="display:flex;flex-direction:column;gap:14px"><span style="width:32px;height:32px;border-radius:50%;border:2px solid var(--akzent,#C33D2E);background:var(--akzent,#C33D2E);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#fff">6</span><span style="font-size:14px;line-height:1.4;color:#f4f1ea;font-weight:600">Line Demo Day</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 PULS ============ -->
+  <section id="s4" data-sec data-screen-label="07 Der Puls" style="background:#f4f1ea;color:#16130f;padding:110px 7vw 120px;border-top:1px solid rgba(22,19,15,.12)">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">07 · DER PULS</span>
+        <span style="flex:1;height:1px;background:rgba(22,19,15,.15)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 22px;font-weight:800;font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.025em;max-width:14em">Ein Ort im Takt der Stadt.</h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .18s,transform .9s cubic-bezier(.22,1,.36,1) .18s;font-family:Newsreader,serif;font-style:italic;font-size:clamp(19px,2vw,25px);line-height:1.45;color:rgba(22,19,15,.8);max-width:34em;margin:0 0 46px">Salzburgs unfairer Vorteil: <strong style="font-style:normal;font-weight:600">Festspielstadt trifft Gründerszene.</strong> Während der Festspiele ist die Weltelite ohnehin da — Innovation direkt daneben zu stellen, ist ein Zugang, den man nicht kaufen kann.</p>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .22s,transform .9s cubic-bezier(.22,1,.36,1) .22s;display:flex;flex-wrap:wrap;gap:10px">
+        <sc-for list="{{ saisons }}" as="sa" hint-placeholder-count="3">
+          <button onClick="{{ waehleSaison }}" data-i="{{ $index }}" style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.1em;padding:13px 22px;cursor:pointer;border:1px solid rgba(22,19,15,.45);background:{{ sa.bg }};color:{{ sa.col }};transition:all .25s">{{ sa.name }}</button>
+        </sc-for>
+      </div>
+      <div style="border-top:2px solid #16130f;margin-top:34px;padding-top:34px;display:grid;grid-template-columns:minmax(200px,1fr) minmax(300px,2fr);gap:44px;min-height:170px">
+        <div style="font-family:Newsreader,serif;font-style:italic;font-weight:400;font-size:clamp(24px,2.6vw,34px);line-height:1.3;color:#16130f">{{ saLead }}</div>
+        <p style="margin:0;font-size:17px;line-height:1.75;color:rgba(22,19,15,.8)">{{ saText }}</p>
+      </div>
+      <blockquote data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin:46px 0 0;padding:0 0 0 28px;border-left:3px solid var(--akzent,#C33D2E);font-family:Newsreader,serif;font-style:italic;font-size:clamp(20px,2.1vw,27px);line-height:1.4;color:rgba(22,19,15,.85);max-width:30em">„Mozart war ein Startup." Ein junges, grenzsprengendes Genie, das Regeln brach und global wurde — der Archetyp der ganzen Idee.</blockquote>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:56px">
+        <img src="assets/vision-puls.jpeg" alt="Vision: ein lebendiger Abend an der Line — Food-Cart, Musik, Waggon-Bühnen, Murals und Menschen zwischen Gleis und Gastronomie" style="display:block;width:100%;height:auto;border:1px solid rgba(22,19,15,.15)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(22,19,15,.5);margin-top:10px">ABB. 06 — DER TAKT DER STADT: GASTRO, KULTUR, ABENDE</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 LABOR ============ -->
+  <section id="s5" data-sec data-screen-label="08 Das Reallabor" style="background:#ece8de;color:#16130f;padding:110px 7vw 120px;border-top:1px solid rgba(22,19,15,.12)">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">08 · DAS REALLABOR</span>
+        <span style="flex:1;height:1px;background:rgba(22,19,15,.15)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 22px;font-weight:800;font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.025em;max-width:13em">Die Strecke selbst ist das Exponat.</h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .18s,transform .9s cubic-bezier(.22,1,.36,1) .18s;font-family:Newsreader,serif;font-style:italic;font-size:clamp(19px,2vw,25px);line-height:1.45;color:rgba(22,19,15,.8);max-width:34em;margin:0 0 34px">3,4 Kilometer geschützt, klar abgegrenzt, nicht dem Straßenverkehr ausgesetzt — genau das, was autonome Fahrzeuge zum Testen brauchen und in einer Innenstadt fast nie legal bekommen.</p>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .22s,transform .9s cubic-bezier(.22,1,.36,1) .22s;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;line-height:1.7;color:rgba(22,19,15,.6);max-width:60ch;margin:0 0 44px">EUROPAS STÄRKE ALS PRODUKT → NICHT „MOVE FAST AND BREAK THINGS", SONDERN: SICHTBAR BEWEGEN, VERANTWORTLICH TESTEN, ALLES DOKUMENTIEREN. EIN REGULIERTER ÖFFENTLICHER TESTKORRIDOR.</p>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .2s,transform .9s cubic-bezier(.22,1,.36,1) .2s;position:relative;height:70px;margin-bottom:50px">
+        <div style="position:absolute;left:0;right:0;top:34px;height:2px;background:rgba(22,19,15,.3)"></div>
+        <div style="position:absolute;left:0;right:0;top:40px;height:1px;background:rgba(22,19,15,.15)"></div>
+        <div style="position:absolute;top:18px;left:-8%;width:74px;height:30px;border-radius:15px;background:#16130f;animation:fahrt 9s linear infinite;display:flex;align-items:center;justify-content:center;gap:5px">
+          <span style="width:8px;height:8px;border-radius:2px;background:rgba(244,241,234,.7)"></span>
+          <span style="width:8px;height:8px;border-radius:2px;background:rgba(244,241,234,.7)"></span>
+          <span style="width:8px;height:8px;border-radius:2px;background:var(--akzent,#C33D2E)"></span>
+        </div>
+        <span style="position:absolute;right:0;top:0;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:rgba(22,19,15,.5)">AUTONOMER SHUTTLE · TESTBETRIEB</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:44px;max-width:1050px">
+        <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--akzent,#C33D2E);margin-bottom:10px">DREI EBENEN ZUGLEICH</div>
+          <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(22,19,15,.75)"><strong style="font-weight:700">Transportader</strong> für Fußgänger und Radfahrer zwischen Lehen und Maxglan. <strong style="font-weight:700">Bespielter öffentlicher Raum</strong> mit Promenade, Gastro, Kultur. <strong style="font-weight:700">Reallabor,</strong> in dem Innovation nicht nur in den Waggons stattfindet, sondern draußen sichtbar vorbeifährt.</p>
+        </div>
+        <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .2s,transform .9s cubic-bezier(.22,1,.36,1) .2s">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--akzent,#C33D2E);margin-bottom:10px">DER NATÜRLICHE PARTNER</div>
+          <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(22,19,15,.75)">Die <strong style="font-weight:700">Salzburg AG</strong> betrieb die Strecke über ihre Vorgänger jahrzehntelang bis Ende 2020. Sie kennt Trasse, Betrieb und Konzessionsfragen aus eigener Hand. Für sie ist die Line eine Teststrecke für die eigene Zukunft — nicht Marketing.</p>
+        </div>
+      </div>
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:50px">
+        <img src="assets/vision-reallabor.png" alt="Vision: ein Gleis-Knotenplatz als öffentlicher Raum — Weichen und Schienen bleiben sichtbar, daneben Sitzplätze, Begrünung und ein Café-Waggon" style="display:block;width:100%;height:auto;border:1px solid rgba(22,19,15,.15)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(22,19,15,.5);margin-top:10px">ABB. 07 — DER KORRIDOR ALS ÖFFENTLICHER RAUM UND TESTFLÄCHE</div>
+      </div>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin:50px 0 0;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.8;letter-spacing:.06em;color:rgba(22,19,15,.55);max-width:74ch;border:1px dashed rgba(22,19,15,.35);padding:16px 20px">SICHERHEIT IST DESIGN, NICHT HOFFNUNG — Fußgänger, Radfahrer und Testfahrzeuge mischen sich nie ungeordnet: getrennte Spuren, klare Zeitfenster, abgegrenzte Abschnitte. Sauber gedacht ein Vorteil, unsauber ein Haftungsrisiko.</p>
+    </div>
+  </section>
+
+  <!-- ============ 09 LINE OS ============ -->
+  <section id="os" data-sec data-screen-label="09 Line OS" style="background:#0f0d0a;color:#f4f1ea;padding:120px 7vw 130px;border-top:1px solid rgba(244,241,234,.1)">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">09 · LINE OS</span>
+        <span style="flex:1;height:1px;background:rgba(244,241,234,.18)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 22px;font-weight:800;font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.025em;max-width:13em">Ein Korridor, der sich selbst misst.</h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .18s,transform .9s cubic-bezier(.22,1,.36,1) .18s;font-family:Newsreader,serif;font-style:italic;font-size:clamp(19px,2vw,25px);line-height:1.45;color:rgba(244,241,234,.85);max-width:34em;margin:0 0 46px">Ein digitaler Zwilling der Linie macht den Ort messbar und steuerbar — und jede europäische Kopie läuft auf derselben Logik.</p>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .2s,transform .9s cubic-bezier(.22,1,.36,1) .2s;border:1px solid rgba(244,241,234,.18);background:rgba(0,0,0,.4)">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-bottom:1px solid rgba(244,241,234,.15)">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.24em;color:#f4f1ea;font-weight:600">LINE OS · KNOTEN NULL · SALZBURG</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--akzent,#C33D2E);animation:blinken 1.4s step-end infinite">● LIVE</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:rgba(244,241,234,.12)">
+          <div style="background:#0f0d0a;padding:24px 22px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:rgba(244,241,234,.5)">FREQUENZ HEUTE</div><div style="font-weight:900;font-size:40px;letter-spacing:-.02em;margin-top:8px"><span id="os-live">1.240</span></div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(244,241,234,.4);margin-top:4px">Besucher:innen an der Line</div></div>
+          <div style="background:#0f0d0a;padding:24px 22px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:rgba(244,241,234,.5)">MODUL-BELEGUNG</div><div style="font-weight:900;font-size:40px;letter-spacing:-.02em;margin-top:8px;color:var(--akzent,#C33D2E)"><span data-count="92">92</span>%</div><div style="margin-top:10px;height:6px;background:rgba(244,241,234,.14)"><div style="height:100%;width:92%;background:var(--akzent,#C33D2E)"></div></div></div>
+          <div style="background:#0f0d0a;padding:24px 22px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:rgba(244,241,234,.5)">AKTIVE CHALLENGES</div><div style="font-weight:900;font-size:40px;letter-spacing:-.02em;margin-top:8px"><span data-count="7">7</span></div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(244,241,234,.4);margin-top:4px">von Corporate-Partnern</div></div>
+          <div style="background:#0f0d0a;padding:24px 22px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:rgba(244,241,234,.5)">AUTONOME TESTKILOMETER</div><div style="font-weight:900;font-size:40px;letter-spacing:-.02em;margin-top:8px"><span data-count="3.4" data-dec="1">3,4</span><span style="font-size:.5em"> km/Tag</span></div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(244,241,234,.4);margin-top:4px">im geschützten Korridor</div></div>
+          <div style="background:#0f0d0a;padding:24px 22px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:rgba(244,241,234,.5)">GRÜN- &amp; CO₂-INDEX</div><div style="font-weight:900;font-size:40px;letter-spacing:-.02em;margin-top:8px;color:#7ba05b"><span data-count="78">78</span></div><div style="margin-top:10px;height:6px;background:rgba(244,241,234,.14)"><div style="height:100%;width:78%;background:#7ba05b"></div></div></div>
+          <div style="background:#0f0d0a;padding:24px 22px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:rgba(244,241,234,.5)">SICHERHEITS-SCORE</div><div style="font-weight:900;font-size:40px;letter-spacing:-.02em;margin-top:8px"><span data-count="99">99</span><span style="font-size:.5em">/100</span></div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(244,241,234,.4);margin-top:4px">getrennte Spuren &amp; Zeitfenster</div></div>
+        </div>
+      </div>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin:34px 0 0;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;color:rgba(244,241,234,.45)">ILLUSTRATIVE WERTE · KONZEPT-DASHBOARD</p>
+      <blockquote data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin:44px 0 0;padding:0 0 0 30px;border-left:3px solid var(--akzent,#C33D2E);font-family:Newsreader,serif;font-style:italic;font-weight:400;font-size:clamp(22px,2.6vw,34px);line-height:1.3;color:#f4f1ea;max-width:22em">Gleis Null ist nicht nur ein Ort. Es ist ein software-definierter Innovationskorridor.</blockquote>
+    </div>
+  </section>
+
+  <!-- ============ 10 STATIONEN ============ -->
+  <section id="s6" data-sec data-screen-label="10 Die Stationen" style="background:#16130f;color:#f4f1ea;padding:110px 7vw 130px;border-top:1px solid rgba(244,241,234,.1)">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">10 · DER TRACK RECORD</span>
+        <span style="flex:1;height:1px;background:rgba(244,241,234,.18)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 22px;font-weight:800;font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.025em;max-width:14em">Fünf Stationen. Fünf Jahrhunderte Beweis.</h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .18s,transform .9s cubic-bezier(.22,1,.36,1) .18s;font-family:Newsreader,serif;font-style:italic;font-size:clamp(19px,2vw,25px);line-height:1.45;color:rgba(244,241,234,.85);max-width:34em;margin:0 0 14px">Salzburg bringt seit Jahrhunderten Weltgeltendes hervor. Entlang der Linie erhält jeder Name seine Station — Herkunft erzählt, Zukunft verankert.</p>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .22s,transform .9s cubic-bezier(.22,1,.36,1) .22s;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:rgba(244,241,234,.5);margin:0 0 60px">KEINE RUHMESHALLE. JEDE STATION ARBEITET IN DER GEGENWART.</p>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);position:relative;padding:0 0 8px">
+        <div style="position:absolute;left:2%;right:2%;top:37px;height:2px;background:rgba(244,241,234,.25)"></div>
+        <div style="display:flex;justify-content:space-between;position:relative">
+          <sc-for list="{{ stationen }}" as="st" hint-placeholder-count="5">
+            <button onClick="{{ waehleStation }}" data-i="{{ $index }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 6px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;color:{{ st.jc }};transition:color .3s">{{ st.jahr }}</span>
+              <span style="width:16px;height:16px;border-radius:50%;border:2px solid {{ st.ring }};background:{{ st.dot }};transition:all .3s"></span>
+              <span style="font-weight:700;font-size:13px;letter-spacing:.06em;color:{{ st.col }};transition:color .3s">{{ st.name }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="margin-top:56px;display:grid;grid-template-columns:minmax(240px,5fr) minmax(300px,7fr);gap:54px;align-items:start;min-height:300px">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.24em;color:var(--akzent,#C33D2E);margin-bottom:14px">STATION {{ stNr }} · {{ stJahr }}</div>
+          <div style="font-family:Newsreader,serif;font-style:italic;font-weight:400;font-size:clamp(28px,3.4vw,44px);line-height:1.2;color:#f4f1ea">{{ stClaim }}</div>
+        </div>
+        <div>
+          <p style="margin:0;font-size:17px;line-height:1.75;color:rgba(244,241,234,.82)">{{ stStory }}</p>
+          <div style="margin-top:28px;border:1px solid rgba(244,241,234,.22);padding:20px 24px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--akzent,#C33D2E);margin-bottom:8px">HEUTE AN DER LINE</div>
+            <p style="margin:0;font-size:15px;line-height:1.65;color:rgba(244,241,234,.75)">{{ stHeute }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:70px">
+        <img src="assets/vision-yard.png" alt="Vision aus der Vogelperspektive: der Innovations-Knoten aus historischen Waggons, roter Lok und umgenutzten Hallen — Herkunft und Gegenwart an einem Ort" style="display:block;width:100%;height:auto;border:1px solid rgba(244,241,234,.15);background:#f4f1ea">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(244,241,234,.45);margin-top:10px">ABB. 08 — DER INNOVATIONSKNOTEN: WAGGONS, HALLE, HERKUNFT UND GEGENWART</div>
+      </div>
+      <blockquote data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin:70px 0 0;padding:0 0 0 28px;border-left:3px solid var(--akzent,#C33D2E);font-family:Newsreader,serif;font-style:italic;font-size:clamp(21px,2.3vw,29px);line-height:1.45;color:rgba(244,241,234,.9);max-width:32em">Salzburg hat sein eigenes Genie einst ziehen lassen. Die Line ist die Ansage, dass Salzburg sein Talent diesmal hält — und ihm einen Ort baut, statt es gehen zu lassen.</blockquote>
+    </div>
+  </section>
+
+  <!-- ============ 11 MODELL ============ -->
+  <section id="s7" data-sec data-screen-label="11 Das Modell" style="background:#f4f1ea;color:#16130f;padding:110px 7vw 120px;border-top:1px solid rgba(22,19,15,.12)">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">11 · DAS MODELL</span>
+        <span style="flex:1;height:1px;background:rgba(22,19,15,.15)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 22px;font-weight:800;font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.025em">Kein Schaufenster.<br>Ein Geschäft.</h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .18s,transform .9s cubic-bezier(.22,1,.36,1) .18s;font-family:Newsreader,serif;font-style:italic;font-size:clamp(19px,2vw,25px);line-height:1.45;color:rgba(22,19,15,.8);max-width:32em;margin:0 0 56px">Betrieb, Risiko und Gewinn liegen bei einem privaten Operator. Drei Ertragssäulen tragen ihn — und visionäre Schichten machen ihn groß.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(22,19,15,.18);border:1px solid rgba(22,19,15,.18)">
+        <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .05s,transform .9s cubic-bezier(.22,1,.36,1) .05s;background:#f4f1ea;padding:30px 28px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.2em;color:rgba(22,19,15,.45)">SÄULE 01</div>
+          <div style="font-weight:800;font-size:22px;letter-spacing:-.01em;margin:12px 0 12px">Membership &amp; Flächen</div>
+          <p style="margin:0;font-size:15px;line-height:1.65;color:rgba(22,19,15,.7)">Startups und Scale-ups zahlen bewusst wenig — sie sind der Content, der Grund, warum alle anderen kommen.</p>
+        </div>
+        <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .15s,transform .9s cubic-bezier(.22,1,.36,1) .15s;background:#f4f1ea;padding:30px 28px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--akzent,#C33D2E)">SÄULE 02 · DER GEWINNBRINGER</div>
+          <div style="font-weight:800;font-size:22px;letter-spacing:-.01em;margin:12px 0 12px">Corporate Partnerships</div>
+          <p style="margin:0;font-size:15px;line-height:1.65;color:rgba(22,19,15,.7)">Gestaffelt vom sichtbaren Engagement bis zum eigenen Team vor Ort. Die höchste Stufe: die eigene Station eines Salzburger Weltunternehmens — Stolz und Business fallen zusammen.</p>
+        </div>
+        <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .25s,transform .9s cubic-bezier(.22,1,.36,1) .25s;background:#f4f1ea;padding:30px 28px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.2em;color:rgba(22,19,15,.45)">SÄULE 03</div>
+          <div style="font-weight:800;font-size:22px;letter-spacing:-.01em;margin:12px 0 12px">Gastro &amp; Events</div>
+          <p style="margin:0;font-size:15px;line-height:1.65;color:rgba(22,19,15,.7)">Frequenzbringer, Margenquelle und Durchlässigkeit in einem — der Schutz gegen den abgeschotteten Techclub.</p>
+        </div>
+      </div>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:56px;border:2px solid #16130f;padding:32px 30px;background:#16130f;color:#f4f1ea">
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-bottom:16px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--akzent,#C33D2E)">DER MOTOR</span>
+          <span style="font-weight:800;font-size:clamp(24px,3vw,36px);letter-spacing:-.02em">Der Korridor baut selbst Firmen.</span>
+        </div>
+        <p style="margin:0 0 20px;font-size:16px;line-height:1.7;color:rgba(244,241,234,.8);max-width:66ch">Ein eingebettetes Venture Studio gründet 3–5 Unternehmen pro Jahr rund um Salzburgs Stärken: Corporate-Challenge → Uni-IP → Founder-in-Residence → 100-Tage-Validierung → VC-Demo → Spin-out mit kleiner Beteiligung des Operators. Aus dem Vermieter wird eine Equity-Maschine.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;padding:8px 13px;border:1px solid rgba(244,241,234,.3);color:rgba(244,241,234,.85)">STATION RIGHTS</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;padding:8px 13px;border:1px solid rgba(244,241,234,.3);color:rgba(244,241,234,.85)">CHALLENGE FEES</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;padding:8px 13px;border:1px solid rgba(244,241,234,.3);color:rgba(244,241,234,.85)">DEMO-DAY-ZUGANG</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;padding:8px 13px;border:1px solid rgba(244,241,234,.3);color:rgba(244,241,234,.85)">VENTURE-EQUITY</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;padding:8px 13px;border:1px solid rgba(244,241,234,.3);color:rgba(244,241,234,.85)">FESTSPIEL-PREMIUM</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;padding:8px 13px;border:1px solid var(--akzent,#C33D2E);color:var(--akzent,#C33D2E)">LINE-OS-LIZENZ</span>
+        </div>
+      </div>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:56px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:44px;align-items:start">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:rgba(22,19,15,.5);margin-bottom:18px">DIE KAPITALSTRUKTUR · DREI SAUBERE SCHICHTEN</div>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <div style="display:flex;gap:16px;padding:14px 0;border-top:1px solid rgba(22,19,15,.18)"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--akzent,#C33D2E)">1</span><p style="margin:0;font-size:15px;line-height:1.6;color:rgba(22,19,15,.75)"><strong style="font-weight:700">Öffentliches Anschubkapital</strong> für Trasse, Waggons, Barrierefreiheit, grünen Raum. Katalytisch — kein Betriebszuschuss.</p></div>
+            <div style="display:flex;gap:16px;padding:14px 0;border-top:1px solid rgba(22,19,15,.18)"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--akzent,#C33D2E)">2</span><p style="margin:0;font-size:15px;line-height:1.6;color:rgba(22,19,15,.75)"><strong style="font-weight:700">Privates &amp; Corporate-Kapital</strong> für Betrieb und Wachstum.</p></div>
+            <div style="display:flex;gap:16px;padding:14px 0;border-top:1px solid rgba(22,19,15,.18);border-bottom:1px solid rgba(22,19,15,.18)"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--akzent,#C33D2E)">3</span><p style="margin:0;font-size:15px;line-height:1.6;color:rgba(22,19,15,.75)"><strong style="font-weight:700">Eigenerlöse</strong> aus Partnern, Flächen und Gastro als dauerhaftes Tragwerk.</p></div>
+          </div>
+        </div>
+        <blockquote style="margin:0;padding:0 0 0 28px;border-left:3px solid var(--akzent,#C33D2E);font-family:Newsreader,serif;font-style:italic;font-size:clamp(20px,2.1vw,27px);line-height:1.45;color:rgba(22,19,15,.85)">Der Lackmustest: Trägt sich der Ort aus Partner-, Miet- und Eigenerlösen — oder hängt er am Tropf? Ein Operator, der Break-even erreichen muss, trifft jede Entscheidung anders. Diese Disziplin erzwingt Qualität.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 12 NETZ ============ -->
+  <section id="s8" data-sec data-screen-label="12 European Line Network" style="background:#16130f;color:#f4f1ea;padding:110px 7vw 130px;border-top:1px solid rgba(244,241,234,.1)">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">12 · DIE THESE</span>
+        <span style="flex:1;height:1px;background:rgba(244,241,234,.18)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 22px;font-weight:800;font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.025em">Das European<br>Line Network.</h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .18s,transform .9s cubic-bezier(.22,1,.36,1) .18s;font-family:Newsreader,serif;font-style:italic;font-size:clamp(19px,2vw,25px);line-height:1.45;color:rgba(244,241,234,.85);max-width:35em;margin:0 0 56px">Fast jede europäische Stadt hat tote Industriegleise. Ein Bund wiedergenutzter Bahnkorridore, jede Stadt mit eigener Trasse und Kultur — aber demselben Betriebsprotokoll. Salzburg ist Knoten null. Über die Städtepartnerschaften hat der Korridor sein Netz von Tag eins.</p>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .2s,transform .9s cubic-bezier(.22,1,.36,1) .2s;border:1px solid rgba(244,241,234,.2);background:rgba(0,0,0,.35)">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid rgba(244,241,234,.2)">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.26em;color:#f4f1ea;font-weight:600">ABFAHRTEN · GLEIS NULL</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--akzent,#C33D2E);animation:blinken 1.4s step-end infinite">● LIVE</span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em">
+          <div style="display:grid;grid-template-columns:70px 1fr auto;gap:18px;padding:13px 24px;color:var(--akzent,#C33D2E);background:rgba(195,61,46,.08)"><span>00</span><span style="font-weight:600">SALZBURG · KNOTEN NULL</span><span>HIER · JETZT</span></div>
+          <div style="display:grid;grid-template-columns:70px 1fr auto;gap:18px;padding:13px 24px;border-top:1px solid rgba(244,241,234,.1);color:rgba(244,241,234,.85)"><span style="color:rgba(244,241,234,.45)">01</span><span>REIMS · FRANKREICH</span><span style="color:rgba(244,241,234,.55)">ANSCHLUSS FREI</span></div>
+          <div style="display:grid;grid-template-columns:70px 1fr auto;gap:18px;padding:13px 24px;border-top:1px solid rgba(244,241,234,.1);color:rgba(244,241,234,.85)"><span style="color:rgba(244,241,234,.45)">02</span><span>VERONA · ITALIEN</span><span style="color:rgba(244,241,234,.55)">ANSCHLUSS FREI</span></div>
+          <div style="display:grid;grid-template-columns:70px 1fr auto;gap:18px;padding:13px 24px;border-top:1px solid rgba(244,241,234,.1);color:rgba(244,241,234,.85)"><span style="color:rgba(244,241,234,.45)">03</span><span>DRESDEN · DEUTSCHLAND</span><span style="color:rgba(244,241,234,.55)">ANSCHLUSS FREI</span></div>
+          <div style="display:grid;grid-template-columns:70px 1fr auto;gap:18px;padding:13px 24px;border-top:1px solid rgba(244,241,234,.1);color:rgba(244,241,234,.85)"><span style="color:rgba(244,241,234,.45)">04</span><span>MERAN · ITALIEN</span><span style="color:rgba(244,241,234,.55)">ANSCHLUSS FREI</span></div>
+          <div style="display:grid;grid-template-columns:70px 1fr auto;gap:18px;padding:13px 24px;border-top:1px solid rgba(244,241,234,.1);color:rgba(244,241,234,.85)"><span style="color:rgba(244,241,234,.45)">05</span><span>VILNIUS · LITAUEN</span><span style="color:rgba(244,241,234,.55)">ANSCHLUSS FREI</span></div>
+          <div style="display:grid;grid-template-columns:70px 1fr auto;gap:18px;padding:13px 24px;border-top:1px solid rgba(244,241,234,.1);color:rgba(244,241,234,.85)"><span style="color:rgba(244,241,234,.45)">06</span><span>SHANGHAI · CHINA · SEIT 2009</span><span style="color:#f4f1ea">AKTIVE ACHSE</span></div>
+          <div style="display:grid;grid-template-columns:70px 1fr auto;gap:18px;padding:13px 24px;border-top:1px solid rgba(244,241,234,.1);color:rgba(244,241,234,.85)"><span style="color:rgba(244,241,234,.45)">07</span><span>KAWASAKI · JAPAN · SEIT 1992</span><span style="color:#f4f1ea">AKTIVE ACHSE</span></div>
+        </div>
+      </div>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:44px;border:1px dashed rgba(244,241,234,.3);padding:26px 28px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--akzent,#C33D2E);margin-bottom:12px">DIE WILDE IDEE · MANCHE WAGGONS REISEN</div>
+        <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(244,241,234,.8);max-width:70ch">Ein „Salzburg KI &amp; Kultur"-Waggon erscheint in Verona. Ein „Dresden Deeptech"-Waggon kommt nach Salzburg. Ein „Vilnius Cybersecurity"-Waggon tourt durch das Netz. Gemeinsame Challenge-Zyklen, Founder-Austausch, europäische Demo Days. Die Metapher wird Realität — die Line fährt buchstäblich durch Europa.</p>
+      </div>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:44px;margin-top:56px;max-width:1050px">
+        <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(244,241,234,.75)"><strong style="font-weight:700">Ein anderes Modell.</strong> Europas Vorsprung liegt nicht darin, die USA oder China im Geld zu schlagen. Er liegt in Offenheit, Souveränität, Vertrauen — tief verwoben mit Industrie und Mittelstand. Hardtech statt der nächsten Social-App.</p>
+        <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(244,241,234,.75)"><strong style="font-weight:700">Souveränität heißt Dialog, nicht Abschottung.</strong> Ein Ort, dessen ganzes Wesen Verbindung ist, kann sich nicht abkapseln, ohne sich selbst zu widersprechen. Offenheit im Licht ist sicherer als Zusammenarbeit im Schatten.</p>
+      </div>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin:50px 0 0;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;line-height:2;color:rgba(244,241,234,.5)">FINANZIERBAR ALS EUROPÄISCHER PROTOTYP → EIC · INTERREG · EIB · KOHÄSIONSINSTRUMENTE<br>PRÄZEDENZFÄLLE → STATION F, PARIS · VILLAGE UNDERGROUND, LONDON · HIGH LINE, NEW YORK · SEOULLO 7017, SEOUL</p>
+    </div>
+  </section>
+
+  <!-- ============ 13 EINSTIEG ============ -->
+  <section id="s9" data-sec data-screen-label="13 Steig ein" style="background:#16130f;color:#f4f1ea;padding:130px 7vw 60px;border-top:1px solid rgba(244,241,234,.14);position:relative;overflow:hidden">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.24em;color:var(--akzent,#C33D2E);margin-bottom:26px">13 · DER AUFRUF</div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 30px;font-weight:900;font-size:clamp(64px,10vw,150px);line-height:.92;letter-spacing:-.035em">STEIG<br>EIN<span style="color:var(--akzent,#C33D2E)">.</span></h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .2s,transform .9s cubic-bezier(.22,1,.36,1) .2s;font-family:Newsreader,serif;font-style:italic;font-size:clamp(21px,2.4vw,30px);line-height:1.45;color:rgba(244,241,234,.9);max-width:28em;margin:0 0 40px">1920 fuhr hier der erste Zug. 2026 fährt der letzte. Was danach kommt, entscheidet diese Stadt — jetzt.</p>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .26s,transform .9s cubic-bezier(.22,1,.36,1) .26s;font-weight:700;font-size:clamp(22px,2.8vw,36px);line-height:1.15;letter-spacing:-.01em;max-width:16em;margin:0 0 70px">Gleis Null ist Salzburgs neues <span style="color:var(--akzent,#C33D2E)">Nervensystem</span>. Die erste europäische Innovationslinie, die sich bewegt.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:rgba(244,241,234,.2);border:1px solid rgba(244,241,234,.2)">
+        <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;background:#16130f;padding:34px 30px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--akzent,#C33D2E);margin-bottom:14px">FÜR SALZBURG &amp; SEINE MENSCHEN</div>
+          <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(244,241,234,.8)">Ein grünes Band statt einer rostenden Narbe: Promenade und Radweg zwischen Lehen und Maxglan, Märkte, Abende und Kultur, die allen gehören. Ein Ort, an dem die Kinder dieser Stadt sehen, dass man hier gründen kann — und bleiben.</p>
+        </div>
+        <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .2s,transform .9s cubic-bezier(.22,1,.36,1) .2s;background:#16130f;padding:34px 30px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--akzent,#C33D2E);margin-bottom:14px">FÜR UNTERNEHMEN &amp; INSTITUTIONEN</div>
+          <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(244,241,234,.8)">Ein physischer Fuß im Innovationsstrom: Zugang zu Talent, Startups und frühem Deal-Flow. Und die edelste Form der Partnerschaft — eine eigene Station, die Ihre Herkunft erzählt und Ihre Zukunft baut.</p>
+        </div>
+      </div>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:56px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;line-height:2.1;color:rgba(244,241,234,.55);max-width:80ch">
+        NÄCHSTE SIGNALE → RECHTSSTATUS DER TRASSE KLÄREN · ANKERPARTNER GEWINNEN · 2–3 CORPORATE-PATEN + 1 UNI ALS ERSTPARTNER · DANN ERST ÖFFENTLICHE TÖPFE
+      </div>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:34px;display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+        <a href="Gleis Null - Präsentationsskript.dc.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:12px;text-decoration:none;border:1px solid var(--akzent,#C33D2E);color:var(--akzent,#C33D2E);padding:14px 22px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em">
+          <span style="font-size:15px">↗</span> VOLLSTÄNDIGES PRÄSENTATIONSSKRIPT
+        </a>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:rgba(244,241,234,.5)">Sprechtext, Regie &amp; Faktenanhang zu allen 13 Kapiteln</span>
+      </div>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);margin-top:70px;border-top:1px solid rgba(244,241,234,.18);padding-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:40px;align-items:start">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--akzent,#C33D2E);margin-bottom:16px">KOLOPHON · WOHER DIESE IDEE KOMMT</div>
+          <p style="margin:0 0 16px;font-family:Newsreader,serif;font-style:italic;font-size:clamp(20px,2.2vw,27px);line-height:1.4;color:#f4f1ea;max-width:22em">Eine sehr schnelle Idee, entstanden an einem einzigen Abend — am 2. Juli 2026, nach dem Lesen der Salzburger Nachrichten.</p>
+          <p style="margin:0;font-size:15px;line-height:1.7;color:rgba(244,241,234,.65);max-width:52ch">Noch lange nicht perfekt. Aber ein Anfang, ein Gedanke, eine Einladung zum Weiterdenken. <em style="font-style:italic;color:rgba(244,241,234,.8)">Made in Salzburg — for the love of Salzburg.</em></p>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.6">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:14px;padding:13px 0;border-top:1px solid rgba(244,241,234,.14)"><span style="color:rgba(244,241,234,.45)">IDEE</span><span style="color:rgba(244,241,234,.85)">Dietmar Rietsch · <a href="https://andthenext.at/" target="_blank" rel="noopener" style="color:var(--akzent,#C33D2E);text-decoration:none;border-bottom:1px solid rgba(195,61,46,.4)">andthenext.at</a></span></div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:14px;padding:13px 0;border-top:1px solid rgba(244,241,234,.14)"><span style="color:rgba(244,241,234,.45)">ANLASS</span><span style="color:rgba(244,241,234,.85)">Salzburger Nachrichten, 2. Juli 2026 — „Stieglbahn vor dem Aus"</span></div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:14px;padding:13px 0;border-top:1px solid rgba(244,241,234,.14);border-bottom:1px solid rgba(244,241,234,.14)"><span style="color:rgba(244,241,234,.45)">QUELLE</span><span style="color:rgba(244,241,234,.85)"><a href="https://www.sn.at/salzburg/politik/stieglbahn-vor-dem-aus-betrieb-wird-nach-mehr-als-100-jahren-eingestellt-art-659900" target="_blank" rel="noopener" style="color:var(--akzent,#C33D2E);text-decoration:none;border-bottom:1px solid rgba(195,61,46,.4);word-break:break-word">sn.at → Stieglbahn vor dem Aus</a></span></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:90px">
+      <div style="height:16px;border-top:2px solid rgba(244,241,234,.35);border-bottom:2px solid rgba(244,241,234,.35);background:repeating-linear-gradient(90deg,transparent 0 19px,rgba(244,241,234,.25) 19px 26px);animation:trackmove 2.6s linear infinite"></div>
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:16px 0 8px;max-width:1160px;margin:0 auto">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:rgba(244,241,234,.4)">GLEIS NULL · KONZEPTPROTOTYP · SALZBURG</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:rgba(244,241,234,.4)">LEHEN ↔ MAXGLAN · 3,4 KM · KNOTEN 0 VON N</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;akzent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#C33D2E&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#C33D2E&quot;, &quot;#33684F&quot;, &quot;#2E5FA3&quot;], &quot;section&quot;: &quot;Erscheinung&quot; },
+  &quot;animationen&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Erscheinung&quot; },
+  &quot;streckenNav&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Darstellung&quot; }
+}">
+class Component extends DCLogic {
+  state = { seite: 0, station: 1, saison: 0, modul: 0, thema: 0 };
+
+  railData = [
+    { id: 'top', lbl: 'START' },
+    { id: 's1', lbl: 'BEFUND' },
+    { id: 'sprung', lbl: 'SPRUNG' },
+    { id: 's2', lbl: 'LINIE' },
+    { id: 'module', lbl: 'MODULE' },
+    { id: 's3', lbl: 'MARKT' },
+    { id: 'zyklus', lbl: 'TAKT' },
+    { id: 's4', lbl: 'PULS' },
+    { id: 's5', lbl: 'LABOR' },
+    { id: 'os', lbl: 'LINE·OS' },
+    { id: 's6', lbl: 'STATIONEN' },
+    { id: 's7', lbl: 'MODELL' },
+    { id: 's8', lbl: 'NETZ' },
+    { id: 's9', lbl: 'EINSTIEG' }
+  ];
+
+  seitenData = [
+    { name: 'UNIVERSITÄTEN', rolle: 'DIE QUELLE', punkt: 'Ohne Quelle kein Strom.', text: 'PLUS, Paracelsus Medizinische Privatuniversität, FH Salzburg, Mozarteum: Aus ihnen kommen Forschung, Talent und Spin-offs. Sie sind nicht Sponsor oder Logo-Geber, sondern struktureller Teil der Pipeline — ihr gesetzlicher Auftrag zum Wissens- und Technologietransfer trifft hier auf einen Ort, an dem er tatsächlich stattfindet.' },
+    { name: 'STARTUPS', rolle: 'DER CONTENT', punkt: 'Der Grund, warum alle kommen.', text: 'Junge Firmen sind nicht der zahlende Kunde — sie sind das Produkt. Der Magnet, der Talent, Deal-Flow und Energie erzeugt. Ihre Flächen bleiben bewusst günstig, weil sie der Grund sind, warum alle anderen kommen.' },
+    { name: 'CORPORATES', rolle: 'DIE NACHFRAGE', punkt: 'Ein Zugangsmarkt, keine Förderlogik.', text: 'W&H, Red Bull, Porsche Holding, Banken und andere zahlen ernsthaftes Geld für einen physischen Fuß im Innovationsstrom. Nicht aus Wohltätigkeit — sondern weil Zugang zu Talent, Startups und frühem Deal-Flow mehr wert ist, als die Fläche kostet.' },
+    { name: 'KAPITAL', rolle: 'DAS SIGNAL', punkt: 'Geld in Gehweite.', text: 'Venture-Capital-Firmen kommen für den frühen Blick auf die Gründerinnen und Gründer, bevor andere sie sehen. Kapital in Gehweite ist für einen Startup-Ort keine nette Zutat, sondern Grundausstattung — ohne sichtbares Geld im Korridor fehlt der Gründerin die halbe Motivation herzukommen.' }
+  ];
+
+  moduleData = [
+    { name: 'STARTUP', tag: 'DAS PRODUKT', claim: '3–5 Gründer:innen. 100 Tage. Demo am Ende.', text: 'Der Grundbaustein der Line: ein Waggon für ein kleines Gründerteam, das einen Zyklus lang an einer Idee baut und sie öffentlich zeigt. Günstig, sichtbar, magnetisch — der Content, der alle anderen anzieht.' },
+    { name: 'LABOR', tag: 'PROTOTYPING', claim: 'Experimentieren. Testen. Bauen.', text: 'Ein temporäres Prototyping-Labor, das sich mit jedem Zyklus neu ausrichtet: KI, Mobilität, Robotik, Foodtech, Medtech, Kreislaufwirtschaft. Hier wird gemacht, nicht nur geredet.' },
+    { name: 'CORPORATE-CHALLENGE', tag: 'ECHTE PROBLEME', claim: 'Ein Konzern legt sein Problem auf die Schiene.', text: 'Ein Unternehmen platziert eine reale Fragestellung in der Line — und Startups treten sichtbar an, sie zu lösen. Aus Sponsoring wird Zusammenarbeit, aus Marketing wird Deal-Flow.' },
+    { name: 'VC-FENSTER', tag: 'KAPITAL', claim: 'Deal-Flow-Lounge mit öffentlichen Sprechstunden.', text: 'Ein kleiner Waggon, in dem Investor:innen öffentliche Office Hours halten. Kapital in Gehweite, für alle sichtbar — der frühe Blick auf die Gründer:innen, bevor andere sie sehen.' },
+    { name: 'FESTIVAL', tag: 'FESTSPIELE', claim: 'Culture-Tech, wenn die Welt ohnehin da ist.', text: 'Zur Festspielzeit wird der Waggon zum Salon: KI-Musik, Bühnendesign, immersive Formate, europäische Kreativität. Innovation direkt neben dem größten Kulturmoment der Stadt.' },
+    { name: 'SCHULE', tag: 'NÄCHSTE GENERATION', claim: 'Kinder betreten die Innovationslinie.', text: 'Robotik, Coding, Making, Nachhaltigkeit — ein Modul, in dem die Kinder dieser Stadt früh sehen, dass Zukunft hier gebaut wird. Der Ort hält Talent, statt es später ziehen zu lassen.' },
+    { name: 'CIVIC', tag: 'DIE STADT TESTET', claim: 'Das Reallabor der öffentlichen Hand.', text: 'Die Stadt nutzt den Korridor selbst: neue Mobilität, Abfall, Energie, urbane Begrünung, Barrierefreiheit — im echten Raum getestet, sichtbar für alle, dokumentiert statt versteckt.' }
+  ];
+
+  themenData = [
+    { name: 'AUTONOME STADT', bsp: 'Porsche-Challenge trifft Salzburg-AG-Testkorridor: autonome Shuttles auf 3,4 geschützten Kilometern — Mobilitätsgeschichte, die weiterfährt.' },
+    { name: 'KI & KULTUR', bsp: 'Mozarteum und KI-Startups: generative Bühne, Musik und immersive Formate — pünktlich zur Festspielzeit, wenn die Weltpresse ohnehin da ist.' },
+    { name: 'KREISLAUF SALZBURG', bsp: 'Stiegl trifft Foodtech: Reststoffe, Verpackung und regionale Kreisläufe — Nachhaltigkeit, gebaut statt behauptet.' },
+    { name: 'SOUVERÄNE TECH', bsp: 'Europäische Hardtech und vertrauenswürdige KI: dual-use-nahe Felder, offen im Licht getestet — das europäische Gegenmodell zum Valley.' },
+    { name: 'GESUNDHEIT & LANGLEBIGKEIT', bsp: 'Paracelsus Uni und Medtech: von der Forschung ins Prototyping — Talent und Kapital in Gehweite.' },
+    { name: 'INDUSTRIE-KI FÜR DEN MITTELSTAND', bsp: 'W&H und Palfinger stellen echte Fertigungsprobleme — KI-Startups liefern, der Mittelstand skaliert.' }
+  ];
+
+  stationenData = [
+    { jahr: '1492', name: 'STIEGL', claim: 'Gebraut, bevor Kolumbus ankam.', story: 'Stiegl wurde 1492 gegründet — im selben Jahr, in dem Kolumbus segelte. Salzburg baute dauerhafte Unternehmen, bevor Amerika überhaupt erreicht war. Über fünfhundert Jahre später gehört die Trasse, um die es hier geht, zu genau dieser Brauerei.', heute: 'Stiegl erzählt 1492 — und betreibt Gastro und Nachhaltigkeit an der Line. Die Gastgeberin des Korridors.' },
+    { jahr: '1756', name: 'MOZART', claim: 'Das Genie, das wir ziehen ließen.', story: 'Salzburg hat sein größtes Talent zu Lebzeiten unterschätzt. Mozart rieb sich an der Enge der Stadt — und ging. Er ist der Archetyp der ganzen Idee: jung, grenzsprengend, global. Die Line ist die Ansage, dass Salzburg sein Talent diesmal hält und ihm einen Ort baut, statt es ziehen zu lassen.', heute: 'Das Mozarteum verbindet an seiner Station Bühne, Musik und Design mit Technologie. Kein Souvenir, keine Mozartkugel — ein Versprechen.' },
+    { jahr: '1947', name: 'PORSCHE', claim: 'Von Salzburg aus zum größten Automobilhändler Europas.', story: 'Die Porsche Holding wuchs von Salzburg aus zu Europas größtem Automobilhandelshaus. Mobilität ist hier keine importierte Kompetenz — sie ist Herkunft.', heute: 'Die Station erzählt Mobilitätsgeschichte und dockt direkt an das Reallabor für autonomes Fahren an. Geschichte, die weiterfährt.' },
+    { jahr: '1984', name: 'RED BULL', claim: 'Aus dem Salzburger Land zur globalen Marke.', story: 'Red Bull hat bewiesen, dass aus Salzburg heraus Weltmarken entstehen — nicht mit Rohstoffen, sondern mit Idee, Marke und Mut. Content, Kultur und Sport als Weltsprache.', heute: 'Die Station bespielt Content und Kultur der Line: Bühne, Formate und Energie für Demo Days und Abende, an denen der Ort der Stadt gehört.' },
+    { jahr: 'HEUTE', name: 'PANZERHALLE', claim: 'Der Beweis, dass es hier schon funktioniert.', story: 'Mitten an der Trasse, in Maxglan, liegt mit der Panzerhalle bereits ein gelungener Umnutzungsort: Adaptive Reuse, gelebt und wirtschaftlich bewiesen. Die Line startet nicht bei null — sie dockt an etwas an, das lokal funktioniert.', heute: 'Der natürliche Ankerknoten im Herzen des Korridors — das Schwergewicht, von dem aus die Line in beide Richtungen wächst.' }
+  ];
+
+  saisonData = [
+    { name: 'FESTSPIELSOMMER', lead: 'Wenn die Welt ohnehin da ist.', text: 'Während der Festspiele sind Weltpresse und internationale Elite in Salzburg. Innovation direkt neben diesen Moment zu stellen, ist ein Zugang, den man nicht kaufen kann. Die Waggons werden neu belegt: Kultur trifft Technologie, Bühne trifft Demo Day.' },
+    { name: 'ADVENT', lead: 'Der Rhythmus der Stadt.', text: 'Im Advent gehört die Line der Stadt: Markt, Licht und Wärme entlang des grünen Bandes. Temporäre, thematische Nutzung statt fixer Vermietung löst die Leere der Nebensaison — und hält den Ort durchlässig.' },
+    { name: 'DAS GANZE JAHR', lead: 'Kein Bürokomplex mit Gleis.', text: 'Demo Days, Talks, Ausstellungen, Märkte — Abende, an denen der Ort der Stadt gehört und nicht nur den Mitgliedern. Gastro und Events sind Frequenzbringer, Margenquelle und Durchlässigkeit in einem: der Schutz gegen den abgeschotteten Techclub.' }
+  ];
+
+  renderVals() {
+    const ink = '#16130f', paper = '#f4f1ea';
+    const ak = 'var(--akzent,#C33D2E)';
+    const st = this.stationenData[this.state.station];
+    const se = this.seitenData[this.state.seite];
+    const sa = this.saisonData[this.state.saison];
+    const mo = this.moduleData[this.state.modul];
+    const th = this.themenData[this.state.thema];
+    return {
+      rail: this.railData,
+      jump: (e) => {
+        const el = document.getElementById(e.currentTarget.dataset.target);
+        if (el) window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
+      },
+      seiten: this.seitenData.map((d, i) => ({ ...d, bg: i === this.state.seite ? ink : 'transparent', col: i === this.state.seite ? paper : ink })),
+      waehleSeite: (e) => this.setState({ seite: +e.currentTarget.dataset.i }),
+      seiteRolle: se.rolle, seiteName: se.name, seiteText: se.text, seitePunkt: se.punkt,
+      module: this.moduleData.map((d, i) => {
+        const on = i === this.state.modul;
+        return { name: d.name, bg: on ? ak : '#f4f1ea', win: on ? 'rgba(255,255,255,.85)' : 'rgba(22,19,15,.25)', lblcol: on ? ak : 'rgba(22,19,15,.5)' };
+      }),
+      waehleModul: (e) => this.setState({ modul: +e.currentTarget.dataset.i }),
+      modName: mo.name, modTag: mo.tag, modClaim: mo.claim, modText: mo.text,
+      themen: this.themenData.map((d, i) => ({ name: d.name, bg: i === this.state.thema ? paper : 'transparent', col: i === this.state.thema ? ink : 'rgba(244,241,234,.8)' })),
+      waehleThema: (e) => this.setState({ thema: +e.currentTarget.dataset.i }),
+      themaName: th.name, themaBsp: th.bsp,
+      saisons: this.saisonData.map((d, i) => ({ ...d, bg: i === this.state.saison ? ink : 'transparent', col: i === this.state.saison ? paper : ink })),
+      waehleSaison: (e) => this.setState({ saison: +e.currentTarget.dataset.i }),
+      saLead: sa.lead, saText: sa.text,
+      stationen: this.stationenData.map((d, i) => {
+        const on = i === this.state.station;
+        return { ...d, dot: on ? ak : '#16130f', ring: on ? ak : 'rgba(244,241,234,.5)', col: on ? paper : 'rgba(244,241,234,.55)', jc: on ? ak : 'rgba(244,241,234,.45)' };
+      }),
+      waehleStation: (e) => this.setState({ station: +e.currentTarget.dataset.i }),
+      stNr: String(this.state.station + 1).padStart(2, '0'),
+      stJahr: st.jahr, stClaim: st.claim, stStory: st.story, stHeute: st.heute
+    };
+  }
+
+  applyTweaks() {
+    document.documentElement.style.setProperty('--akzent', this.props.akzent ?? '#C33D2E');
+    document.documentElement.dataset.motion = (this.props.animationen ?? true) ? 'an' : 'aus';
+    const rn = document.getElementById('railnav');
+    if (rn) rn.style.display = ((this.props.streckenNav ?? true) && window.innerWidth >= 1080) ? 'flex' : 'none';
+  }
+
+  countUp(el) {
+    const ziel = parseFloat(el.dataset.count);
+    const von = el.dataset.von ? parseFloat(el.dataset.von) : 0;
+    const dec = +(el.dataset.dec || 0);
+    const dauer = 1500, t0 = performance.now();
+    const fmt = (v) => v.toFixed(dec).replace('.', ',');
+    const tick = (t) => {
+      const p = Math.min(1, (t - t0) / dauer);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(von + (ziel - von) * e);
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  syncScroll() {
+    const secs = [...document.querySelectorAll('[data-sec]')];
+    const items = [...document.querySelectorAll('[data-railitem]')];
+    const y = window.scrollY + window.innerHeight * 0.38;
+    let cur = 0;
+    secs.forEach((s, i) => { if (s.offsetTop <= y) cur = i; });
+    items.forEach((it, i) => {
+      const dot = it.querySelector('[data-dot]');
+      const lbl = it.querySelector('[data-lbl]');
+      const on = i === cur;
+      if (dot) { dot.style.background = on ? 'var(--akzent,#C33D2E)' : 'rgba(128,124,116,.55)'; dot.style.transform = on ? 'scale(1.6)' : 'scale(1)'; }
+      if (lbl) { lbl.style.color = on ? 'var(--akzent,#C33D2E)' : 'rgba(128,124,116,.85)'; lbl.style.opacity = on ? '1' : '.7'; }
+    });
+    const p = window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const fb = document.getElementById('fortschritt');
+    if (fb) fb.style.transform = 'scaleX(' + p + ')';
+  }
+
+  componentDidMount() {
+    this.applyTweaks();
+    this._onScroll = () => this.syncScroll();
+    this._onResize = () => this.applyTweaks();
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onResize);
+    this._io = new IntersectionObserver((entries) => {
+      for (const en of entries) {
+        if (!en.isIntersecting) continue;
+        const el = en.target;
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.querySelectorAll('[data-count]').forEach((c) => this.countUp(c));
+        this._io.unobserve(el);
+      }
+    }, { threshold: 0.15 });
+    document.querySelectorAll('[data-rv]').forEach((el) => this._io.observe(el));
+    this._osTimer = setInterval(() => {
+      if (document.documentElement.dataset.motion === 'aus') return;
+      const el = document.getElementById('os-live');
+      if (el) el.textContent = (1200 + Math.floor(Math.random() * 90)).toLocaleString('de-DE');
+    }, 2200);
+    this.syncScroll();
+  }
+
+  componentDidUpdate() {
+    this.applyTweaks();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onResize);
+    if (this._io) this._io.disconnect();
+    if (this._osTimer) clearInterval(this._osTimer);
+  }
+}
+</script>
+</body>
+</html>

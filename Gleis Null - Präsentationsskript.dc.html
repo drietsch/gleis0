@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#4a4741}
+doc-page:not(:defined){visibility:hidden}
+</style>
+</helmet>
+
+<x-import component-from-global-scope="doc-page" from="./doc-page.js" size="a4" margin="0.85in" hint-size="100%,100%">
+
+  <div style="display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.18em;color:#a8a49c;padding-bottom:8px;border-bottom:1px solid #e4e0d8;margin-bottom:30px">
+    <span>GLEIS NULL · PRÄSENTATIONSSKRIPT</span>
+    <span>SALZBURG · KNOTEN NULL</span>
+  </div>
+
+  <!-- TITEL -->
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.28em;color:#C33D2E;margin-bottom:14px">PRÄSENTATIONSSKRIPT · SPRECHTEXT &amp; REGIE</div>
+  <h1 style="font-family:Archivo,sans-serif;font-weight:900;font-size:52px;line-height:.94;letter-spacing:-.03em;color:#16130f;margin:0 0 10px">Gleis Null</h1>
+  <div style="font-family:Newsreader,serif;font-style:italic;font-size:19px;color:#4a4741;margin-bottom:26px">Ein kommerzieller Innovationskorridor auf der Stiegltrasse — Salzburg als Knoten null eines europäischen Modells.</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 34px;border-top:2px solid #16130f;border-bottom:1px solid #d9d4ca;padding:16px 0;font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.9;color:#4a4741">
+    <div><span style="color:#a8a49c">FORMAT</span> &nbsp;Scroll-Präsentation, 13 Kapitel</div>
+    <div><span style="color:#a8a49c">DAUER</span> &nbsp;ca. 18–22 Minuten</div>
+    <div><span style="color:#a8a49c">PUBLIKUM</span> &nbsp;Stadt/Land · Corporates · Bürger:innen</div>
+    <div><span style="color:#a8a49c">SPRACHE</span> &nbsp;Deutsch, emotional/visionär</div>
+  </div>
+
+  <div style="margin:26px 0 8px;font-family:Archivo,sans-serif;font-weight:700;font-size:13px;letter-spacing:.02em;color:#16130f">Zur Benutzung dieses Skripts</div>
+  <p style="font-family:Newsreader,serif;font-size:14.5px;line-height:1.6;color:#2a2721;margin:0 0 8px">Jedes Kapitel besteht aus drei Blöcken: <strong>Auf dem Bild</strong> beschreibt, was das Publikum sieht. <strong>Gesprochen</strong> ist der Sprechtext — frei formuliert, nicht abgelesen; die kursiven Sätze sind die Kernbotschaften, die genau so fallen sollten. <strong>Regie</strong> nennt Übergang, Tempo und Betonung. Die Zeitangaben sind Richtwerte für eine 20-Minuten-Fassung; für einen Kurzpitch (8 Min.) nur die mit ★ markierten Kapitel sprechen.</p>
+
+  <div style="height:1px;background:#d9d4ca;margin:30px 0"></div>
+
+  <!-- ============ KAPITEL-BLÖCKE ============ -->
+  <sc-for list="{{ kapitel }}" as="k" hint-placeholder-count="15">
+    <div style="break-inside:avoid;margin-bottom:34px">
+      <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:4px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;color:#C33D2E">{{ k.nr }}</span>
+        <h2 style="font-family:Archivo,sans-serif;font-weight:800;font-size:23px;letter-spacing:-.02em;color:#16130f;margin:0;line-height:1.1">{{ k.titel }}</h2>
+        <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;color:#a8a49c;white-space:nowrap">{{ k.zeit }}</span>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#8a867e;margin:10px 0 5px">AUF DEM BILD</div>
+      <div style="font-family:Newsreader,serif;font-style:italic;font-size:13.5px;line-height:1.5;color:#6a665e;margin-bottom:12px">{{ k.bild }}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#8a867e;margin:0 0 6px">GESPROCHEN</div>
+      <div style="border-left:2px solid #C33D2E;padding-left:16px">
+        <sc-for list="{{ k.text }}" as="p" hint-placeholder-count="3">
+          <p style="font-family:Newsreader,serif;font-size:14.5px;line-height:1.62;color:#221f19;margin:0 0 10px">{{ p }}</p>
+        </sc-for>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.1em;color:#8a867e;margin-top:12px;line-height:1.6"><span style="color:#C33D2E">REGIE · </span>{{ k.regie }}</div>
+    </div>
+  </sc-for>
+
+  <div style="height:1px;background:#d9d4ca;margin:34px 0 26px"></div>
+
+  <!-- ANHANG: FAKTEN & EINWÄNDE -->
+  <div style="break-inside:avoid">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;color:#C33D2E;margin-bottom:12px">ANHANG A · FAKTEN AUF ABRUF</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.85;color:#2a2721">
+      <div style="display:grid;grid-template-columns:170px 1fr;gap:10px;padding:7px 0;border-top:1px solid #e4e0d8"><span style="color:#8a867e">Strecke</span><span>3,4 km · normalspurig · eingleisig · nicht elektrifiziert · Lehen ↔ Maxglan</span></div>
+      <div style="display:grid;grid-template-columns:170px 1fr;gap:10px;padding:7px 0;border-top:1px solid #e4e0d8"><span style="color:#8a867e">Netzanschluss</span><span>bei Aiglhof, 1,9 km westlich des Hauptbahnhofs — an das nationale Schienennetz angebunden</span></div>
+      <div style="display:grid;grid-template-columns:170px 1fr;gap:10px;padding:7px 0;border-top:1px solid #e4e0d8"><span style="color:#8a867e">Eröffnet</span><span>16. Februar 1920 · über 100 Jahre Industriegeschichte</span></div>
+      <div style="display:grid;grid-template-columns:170px 1fr;gap:10px;padding:7px 0;border-top:1px solid #e4e0d8"><span style="color:#8a867e">Personenverkehr</span><span>seit 1988 offiziell zugelassen — beginnt rechtlich nicht bei null</span></div>
+      <div style="display:grid;grid-template-columns:170px 1fr;gap:10px;padding:7px 0;border-top:1px solid #e4e0d8"><span style="color:#8a867e">Anschlüsse</span><span>9 weitere Industriebetriebe mit eigenem Gleisanschluss</span></div>
+      <div style="display:grid;grid-template-columns:170px 1fr;gap:10px;padding:7px 0;border-top:1px solid #e4e0d8"><span style="color:#8a867e">Eigentum/Betrieb</span><span>Anschlussbahnen AG (seit 1977) · Auftraggeber Stiegl · Betrieb SETG · historisch Salzburg AG bis 2020</span></div>
+      <div style="display:grid;grid-template-columns:170px 1fr;gap:10px;padding:7px 0;border-top:1px solid #e4e0d8;border-bottom:1px solid #e4e0d8"><span style="color:#8a867e">Politik</span><span>KPÖ-Antrag 2/2025 für Machbarkeitsstudie Personenverkehr — Stadt &amp; Land vorsichtig positiv</span></div>
+    </div>
+  </div>
+
+  <div style="break-inside:avoid;margin-top:30px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;color:#C33D2E;margin-bottom:12px">ANHANG B · EINWÄNDE &amp; ANTWORTEN</div>
+    <sc-for list="{{ einwaende }}" as="e" hint-placeholder-count="4">
+      <div style="break-inside:avoid;margin-bottom:14px">
+        <div style="font-family:Archivo,sans-serif;font-weight:700;font-size:13.5px;color:#16130f;margin-bottom:3px">„{{ e.frage }}"</div>
+        <div style="font-family:Newsreader,serif;font-size:14px;line-height:1.55;color:#2a2721">{{ e.antwort }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="break-inside:avoid;margin-top:34px;border-top:2px solid #16130f;padding-top:20px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;color:#C33D2E;margin-bottom:10px">KOLOPHON</div>
+    <p style="font-family:Newsreader,serif;font-style:italic;font-size:15px;line-height:1.5;color:#221f19;margin:0 0 8px;max-width:34em">Eine sehr schnelle Idee, entstanden an einem einzigen Abend — am 2. Juli 2026, nach dem Lesen der Salzburger Nachrichten. Noch lange nicht perfekt. Aber ein Anfang. <strong style="font-style:normal">Made in Salzburg — for the love of Salzburg.</strong></p>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.8;color:#4a4741">
+      <div>IDEE &nbsp;·&nbsp; Dietmar Rietsch · andthenext.at</div>
+      <div>ANLASS &nbsp;·&nbsp; Salzburger Nachrichten, 2.7.2026 — „Stieglbahn vor dem Aus"</div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.16em;color:#a8a49c;padding-top:8px;border-top:1px solid #e4e0d8;margin-top:36px">
+    <span>MADE IN SALZBURG — FOR THE LOVE OF SALZBURG</span>
+    <span>ANDTHENEXT.AT</span>
+  </div>
+
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      kapitel: [
+        {
+          nr: '00 ★', titel: 'Hero — Gleis Null', zeit: '~1:30',
+          bild: 'Riesiges „GLEIS NULL", das Wort NULL nur als roter Umriss. Eine Trasse als animiertes Gleisband. Die These: „Salzburg braucht keinen weiteren Campus. Es braucht ein Nervensystem."',
+          text: [
+            'Salzburg, 1920: Hier fährt der erste Zug der Stieglbahn. 2026, in wenigen Monaten, fährt der letzte. Über hundert Jahre Industriegeschichte — mitten in der Stadt — kommen zum Stillstand.',
+            'Die meisten sehen darin einen Verlust. Ich sehe darin die größte Chance, die Salzburg seit Jahrzehnten bekommt. Denn wo eine Bahn endet, kann eine Linie beginnen.',
+            'Und ich behaupte: Salzburg braucht keinen weiteren Campus. Salzburg braucht ein Nervensystem. Das ist Gleis Null.'
+          ],
+          regie: 'Ruhig, fast erzählerisch beginnen. Pause vor „ein Nervensystem". Das ist der Anker des ganzen Vortrags — hier zum ersten Mal setzen.'
+        },
+        {
+          nr: '01 ★', titel: 'Der Befund — Die Stunde Null', zeit: '~1:30',
+          bild: 'Heller Umbruch. Große Zeile „Ende 2026 rollt hier der letzte Güterzug." Vier hochzählende Kennzahlen (3,4 km · 1920 · 9+1 · 2026) und das Streckendiagramm Aiglhof → Panzerhalle → Stiegl.',
+          text: [
+            'Die Fakten zuerst. Die Stieglbrauerei stellt den Güterverkehr auf ihrer 3,4 Kilometer langen Trasse zwischen Lehen und Maxglan Ende 2026 auf LKW um. Eine innerstädtische Bahn droht zu verfallen — und ihre Konzession zu verlieren.',
+            'Gleichzeitig fehlt Salzburg, wie fast jeder europäischen Stadt, ein sichtbarer, physischer Ort, an dem sein Innovations-Ökosystem zusammenkommt.',
+            'Der eigentliche Befund ist aber größer. Europa fehlt es nicht an Wissenschaft, nicht an Talent, nicht an Ideen. Es fehlt am Bindegewebe — an Dichte, an Tempo, an der Bereitschaft, Disziplinen kollidieren zu lassen. Wir forschen exzellent und lassen andernorts skalieren. Das ist kein Geldproblem. Das ist ein Kultur- und Geschwindigkeitsproblem.'
+          ],
+          regie: 'Sachlicher Ton, das ist der Faktenteil. Die Kennzahlen laufen hoch — kurz atmen lassen. „Bindegewebe" betonen; kommt später wieder.'
+        },
+        {
+          nr: '02 ★', titel: 'Der Sprung — Nervensystem & physische API', zeit: '~2:00',
+          bild: 'Dunkles Kapitel. „Kein Ort, an dem Innovation passiert. Eine Maschine, die sie bewegt." Nervensystem-Raster: Schiene = Rückgrat, Waggons = Organe, Stationen = Synapsen, Menschen = Puls. Darunter die Trasse als „physische API".',
+          text: [
+            'Jetzt der gedankliche Sprung. Gleis Null ist kein Ort, an dem Innovation zufällig passiert. Gleis Null ist eine Maschine, die Innovation bewegt.',
+            'Die Schiene ist nicht Kulisse — sie ist das Produkt. Die Waggons sind nicht Deko — sie sind ausführbare Module. Denken Sie es als Körper: Die Schiene ist das Rückgrat, die Waggons sind die Organe, die Stationen sind die Synapsen, die Menschen sind der Puls. Die Stadt lernt, indem sie sich bewegt.',
+            'Und technisch gesprochen wird die Trasse zu einer physischen Schnittstelle — einer API. Universitäten veröffentlichen Challenges, Startups belegen Waggons, Corporates starten echte Probleme, VCs betreiben Deal-Flow-Fenster, Bürger:innen treten über Kultur und Gastro ein, die Stadt nutzt den Korridor als Testfläche. Weniger Immobilie, mehr Protokoll.',
+            'In einem Satz: Gleis Null verwandelt tote Infrastruktur in lebendige ökonomische Intelligenz.'
+          ],
+          regie: 'Das visionäre Herzstück. Tempo leicht anziehen, Energie aufbauen. Den Schlusssatz langsam und mit Pause davor — er darf im Raum stehen bleiben.'
+        },
+        {
+          nr: '03', titel: 'Die Form — Linie statt Campus', zeit: '~1:30',
+          bild: 'Zwei Skizzen nebeneinander: der geschlossene „Campus"-Kasten gegen die offene „Linie". Darunter das große Vision-Rendering des Korridors (Netzanschluss → Panzerhalle → Kreativpark → Stiegl).',
+          text: [
+            'Warum eine Linie und kein Campus? Ein Campus ist ein Behälter. Man geht hinein und bleibt in seinem Silo. Genau das ist Europas Problem, nicht seine Lösung.',
+            'Eine Linie dagegen erzwingt Bewegung und Nachbarschaft. Der KI-Mensch geht am MedTech-Menschen vorbei, am Kapitalgeber, am Café. Diese erzwungene Reibung ist der eigentliche Wert — nicht die Waggons. Der Ort baut physisch das Bindegewebe nach, das Europa im Übertragenen fehlt.',
+            'Die Referenz ist die New Yorker High Line — im Geist, nicht in der Bauform. Ebenerdig, grün, begehbar. Ein Rhythmus aus dichten Innovationsknoten und offenen grünen Räumen. Und wir starten nicht bei null: Mit der Panzerhalle liegt mitten an der Trasse bereits ein bewiesener Umnutzungsort — das Schwergewicht, an das wir andocken.'
+          ],
+          regie: 'Beim Vision-Bild kurz schweigen und schauen lassen. „im Geist, nicht in der Bauform" ist wichtig — kein Hochbau wie in New York.'
+        },
+        {
+          nr: '04', titel: 'Die Module — Waggons als Cartridges', zeit: '~1:45',
+          bild: 'Interaktive Waggonreihe. Ein Klick auf einen Waggon zeigt das jeweilige Modul: Startup, Labor, Corporate-Challenge, VC-Fenster, Festival, Schule, Civic.',
+          text: [
+            'Wie sieht die Nutzung konkret aus? Nicht als „Büros in Waggons" — das ist zu klein gedacht. Jeder Waggon ist ein Modul. Eine Kartusche. Tauschbar, thematisch belegbar, mietbar, bewegbar, neu kombinierbar. Ein physischer App Store für Innovation.',
+            'Ich zeige ein paar: Das Startup-Modul — drei bis fünf Gründer:innen, hundert Tage, Demo am Ende. Das Labor-Modul für KI, Mobilität, Robotik, Foodtech, Medtech. Das Corporate-Challenge-Modul, in dem ein Konzern ein echtes Problem auf die Schiene legt. Das VC-Fenster mit öffentlichen Sprechstunden. Das Festival-Modul zur Festspielzeit. Das Schul-Modul für die nächste Generation. Und das Civic-Modul, mit dem die Stadt selbst testet.',
+            'Das hält die Linie lebendig: nicht einmal vermietet und eingefroren, sondern ständig neu belegt. Manche Module sind fix, manche wandern — und manche reisen sogar in andere Städte.'
+          ],
+          regie: 'Interaktiv! Live ein, zwei Module anklicken — nicht alle aufzählen, das Publikum sieht sie. Betonen: „tauschbar" ist der Unterschied zur klassischen Immobilie.'
+        },
+        {
+          nr: '05', titel: 'Der Markt — Vier Seiten, ein Band', zeit: '~1:45',
+          bild: 'Vier Reiter zum Durchklicken: Universitäten (Quelle), Startups (Content), Corporates (Nachfrage), Kapital (Signal). Jede Seite mit Rolle und Erklärung.',
+          text: [
+            'Warum trägt das Modell wirtschaftlich? Weil vier Seiten eines Marktes an einem Ort kollidieren — und jede eine klare Rolle hat.',
+            'Die Universitäten sind die Quelle: PLUS, Paracelsus, FH Salzburg, Mozarteum liefern Forschung, Talent, Spin-offs. Die Startups sind der Content — sie sind nicht der zahlende Kunde, sie sind das Produkt, der Magnet. Die Corporates sind die zahlende Nachfrage: Sie zahlen für einen physischen Fuß im Innovationsstrom, weil Zugang zu Talent und frühem Deal-Flow mehr wert ist als die Fläche kostet. Und die VCs bringen Kapital und Signal — Geld in Gehweite.',
+            'Entscheidend ist die Rollentrennung: Unis liefern die Quelle, Startups den Content, Corporates die Nachfrage, VCs das Kapital, ein privater Operator kuratiert. So entsteht ein Ökosystem — kein Gemischtwarenladen.'
+          ],
+          regie: 'Hier sitzen die Zahler im Publikum. Ruhig, souverän. „Zugangsmarkt, keine Förderlogik" — dieser Satz überzeugt Corporates.'
+        },
+        {
+          nr: '06', titel: 'Der Takt — Der 100-Tage-Zyklus', zeit: '~1:30',
+          bild: 'Wählbare Zyklus-Themen (Autonome Stadt, KI & Kultur, Kreislauf …) und der immergleiche 6-Schritt-Ablauf bis zum Line Demo Day.',
+          text: [
+            'Ein Ort braucht einen Rhythmus. Deshalb programmiert sich Gleis Null alle hundert Tage neu. Jeder Zyklus hat ein Thema — Autonome Stadt, KI und Kultur, Kreislauf Salzburg, souveräne Tech, Industrie-KI für den Mittelstand.',
+            'Der Ablauf bleibt gleich: Corporates stellen echte Challenges, Universitäten liefern Forschung, Startups ziehen in die Waggons, VCs bekommen kuratierten Zugang, Bürger:innen sehen öffentliche Demos — und am Ende steht der Line Demo Day.',
+            'Das macht aus einem Standort eine Maschine für Momentum: wiederholbar, medientauglich und kommerziell nutzbar zugleich.'
+          ],
+          regie: 'Ein Thema live anklicken, das zur Zielgruppe passt (bei Stadt/Land: „Kreislauf Salzburg"; bei Corporates: „Industrie-KI"). Tempo zügig.'
+        },
+        {
+          nr: '07 ★', titel: 'Der Puls — Festspielstadt trifft Gründerszene', zeit: '~1:30',
+          bild: 'Reiter Festspielsommer / Advent / Ganzes Jahr. Zitat: „Mozart war ein Startup." Foto-Platz für einen Salzburg-Moment.',
+          text: [
+            'Und hier hat Salzburg einen unfairen Vorteil, den keine andere Stadt so besitzt. Salzburg ist Weltmarke für Kultur. Festspielstadt trifft Gründerszene.',
+            'Während der Festspiele sind Weltpresse und internationale Elite ohnehin hier. Innovation direkt neben diesen Moment zu stellen, ist ein Zugang, den man nicht kaufen kann. Die Waggons lassen sich thematisch immer neu belegen — im Advent gehört die Line der Stadt, mit Markt und Licht.',
+            'Kultur ist nicht der Gegensatz zu Tech. Kultur ist Teil dessen, was europäische Innovation ausmacht. Dieses Narrativ ist von Salzburg aus glaubwürdig erzählbar — und von kaum einem anderen Ort der Welt.'
+          ],
+          regie: 'Mit Stolz sprechen — das ist der emotionale Salzburg-Moment. „einen Zugang, den man nicht kaufen kann" betonen. Achtung: Mozart als Genie, nicht als Mozartkugel.'
+        },
+        {
+          nr: '08', titel: 'Das Reallabor — Die Strecke als Exponat', zeit: '~1:30',
+          bild: 'Ein animierter autonomer Shuttle fährt über die Gleislinie. Zwei Spalten: „Drei Ebenen zugleich" und „Der natürliche Partner: Salzburg AG". Sicherheitshinweis-Kasten.',
+          text: [
+            'Die Trasse ist nicht nur Standort — sie ist selbst ein Produkt, auf drei Ebenen zugleich. Sie ist eine echte Transportader für Fußgänger und Radfahrer zwischen Lehen und Maxglan. Sie ist bespielter öffentlicher Raum. Und sie ist ein Reallabor für autonome Mobilität.',
+            '3,4 Kilometer, geschützt, klar abgegrenzt, nicht dem allgemeinen Straßenverkehr ausgesetzt — das ist genau das, was autonome Fahrzeuge zum Testen brauchen und in einer Innenstadt fast nie legal bekommen. Innovation findet nicht nur in den Waggons statt, sie fährt draußen sichtbar vorbei. Der Korridor wird selbst zum Exponat.',
+            'Der natürliche Partner dafür ist die Salzburg AG — sie hat die Strecke jahrzehntelang bis 2020 betrieben und kennt Trasse, Betrieb und Konzession aus eigener Hand. Und noch ein Prinzip: Sicherheit ist Design, nicht Hoffnung. Getrennte Spuren, klare Zeitfenster, abgegrenzte Abschnitte — sauber gedacht ein Vorteil, unsauber ein Haftungsrisiko.'
+          ],
+          regie: 'Technisch-seriös. Den Sicherheitspunkt aktiv ansprechen — das nimmt Behörden die größte Sorge vorweg.'
+        },
+        {
+          nr: '09', titel: 'Line OS — Der digitale Zwilling', zeit: '~1:00',
+          bild: 'Dunkles Dashboard mit Live-Kacheln: Frequenz, Modul-Belegung, aktive Challenges, autonome Testkilometer, Grün-Index, Sicherheits-Score.',
+          text: [
+            'Damit der Korridor steuerbar bleibt, bekommt er einen digitalen Zwilling: Line OS. Frequenz, Belegung, Challenges, Testkilometer, Umweltdaten, Sicherheit — messbar und öffentlich lesbar.',
+            'Das klingt technisch, hat aber einen strategischen Zweck: Jede europäische Kopie des Modells kann auf derselben Logik laufen. Gleis Null ist damit nicht nur ein Ort — es ist ein software-definierter Innovationskorridor.'
+          ],
+          regie: 'Kurz halten. Die Werte sind illustrativ — so auch sagen, wenn nachgefragt wird. Überleitung zur Replizierbarkeit.'
+        },
+        {
+          nr: '10 ★', titel: 'Die Stationen — Salzburgs Track Record', zeit: '~2:00',
+          bild: 'Zeitleiste zum Durchklicken: Stiegl 1492 · Mozart 1756 · Porsche 1947 · Red Bull 1984 · Panzerhalle heute. Jede Station: Herkunftsgeschichte + „Heute an der Line".',
+          text: [
+            'Warum ausgerechnet Salzburg? Weil diese Stadt seit Jahrhunderten Weltgeltendes hervorbringt. Entlang der Linie erhält jeder dieser Namen seine eigene Station — und jede erzählt Herkunft und arbeitet zugleich in der Gegenwart.',
+            'Stiegl, gegründet 1492 — im selben Jahr, in dem Kolumbus segelte; Salzburg baute dauerhafte Unternehmen, bevor Amerika erreicht war. Porsche wuchs von hier zu Europas größtem Automobilhändler. Red Bull wurde von Salzburg aus zur globalen Marke. Und die Panzerhalle ist der lebende Beweis, dass Umnutzung hier schon funktioniert.',
+            'Und dann Mozart. Salzburg hat sein größtes Talent zu Lebzeiten unterschätzt — er rieb sich an der Enge der Stadt und ging. Die Line ist die Ansage, dass Salzburg sein Talent diesmal hält und ihm einen Ort baut, statt es ziehen zu lassen. Mozart, dann die Weltunternehmen, jetzt die Gründer: dieselbe schöpferische Linie über die Jahrhunderte. Das ist das europäische Gegenmodell zum Valley.',
+            'Wirtschaftlich ist eine Station übrigens die edelste Form der Partnerschaft: Ein Unternehmen, das mit einer Station geehrt wird, hat allen Grund, sie zu finanzieren. Stolz und Business fallen zusammen.'
+          ],
+          regie: 'Das erzählerische Highlight. Beim Mozart-Absatz Tempo herausnehmen — der emotionale Höhepunkt. Warnung an sich selbst: keine Mozartkugel-Anekdoten.'
+        },
+        {
+          nr: '11', titel: 'Das Modell — Kein Schaufenster, ein Geschäft', zeit: '~1:30',
+          bild: 'Drei Ertragssäulen (Membership · Corporate Partnerships · Gastro & Events), der „Motor"-Kasten Venture Studio und die drei sauberen Kapitalschichten.',
+          text: [
+            'Damit klar ist: Das ist kein subventioniertes Schaufenster, sondern ein kommerziell getragener Ort. Betrieb, Risiko und Gewinn liegen bei einem privaten Operator. Drei Säulen tragen ihn: Membership und Flächen, Corporate Partnerships als eigentlicher Gewinnbringer, und Gastro und Events als Frequenz- und Margenbringer.',
+            'Darüber hinaus baut der Korridor selbst Firmen: Ein eingebettetes Venture Studio gründet drei bis fünf Unternehmen pro Jahr — von der Corporate-Challenge über Uni-IP bis zum Spin-out mit kleiner Beteiligung. Aus dem Vermieter wird eine Equity-Maschine.',
+            'Und die Kapitalstruktur ist sauber getrennt: Öffentliches Anschubkapital für den mutigen Sprung — Trasse, Waggons, Barrierefreiheit, grüner Raum. Privates und Corporate-Kapital für Betrieb und Wachstum. Eigenerlöse als dauerhaftes Tragwerk. Fördergeld ist Risikokapital für den Anschub, nicht Sauerstoff für den Betrieb. Wer nur Förderung will, wirkt bedürftig; wer etwas kommerziell Tragfähiges baut und den Staat als Ko-Investor einlädt, verhandelt aus Stärke.'
+          ],
+          regie: 'Fest und selbstbewusst. Der Lackmustest-Gedanke („trägt sich, oder hängt am Tropf?") überzeugt Politik und Wirtschaft gleichermaßen.'
+        },
+        {
+          nr: '12 ★', titel: 'European Line Network — Knoten null', zeit: '~1:30',
+          bild: 'Abfahrtstafel mit Salzburg (Knoten 00) und den Partnerstädten Reims, Verona, Dresden, Meran, Vilnius, Shanghai, Kawasaki. Kasten „Manche Waggons reisen".',
+          text: [
+            'Zuletzt der größte Rahmen. Eine Linie in Salzburg ist ein schönes Projekt. Salzburg als erster Knoten eines Modells, das andere Städte auf ihrer eigenen toten Bahninfrastruktur nachbauen — das ist ein Vorreitermodell. Fast jede Stadt hat stillgelegte Gleise.',
+            'Und Salzburg hat sein Netz von Tag eins: über die Städtepartnerschaften — Reims, Verona, Dresden, Meran, Vilnius, dazu Shanghai und Kawasaki in Asien. Die wilde Idee: Manche Waggons reisen. Ein Salzburger KI-und-Kultur-Waggon erscheint in Verona, ein Dresdner Deeptech-Waggon kommt zu uns. Die Metapher wird Realität.',
+            'Europas Vorsprung liegt nicht darin, die USA oder China im Geld zu schlagen, sondern in einem anderen Modell: offen, souverän, vertrauenswürdig, verwoben mit Industrie und Mittelstand. Souveränität heißt dabei Dialog, nicht Abschottung — ein Ort, dessen Wesen Verbindung ist, kann sich nicht abkapseln. Genau das macht das Projekt für EIC, Interreg und EIB interessant: nicht als Lokalprojekt, sondern als finanzierter Prototyp einer europäischen Antwort.'
+          ],
+          regie: 'Groß denken, Blick heben. Bei EU-Publikum stärker auf EIC/Interreg/EIB; bei lokalem Publikum stärker auf die Partnerstädte.'
+        },
+        {
+          nr: '13 ★', titel: 'Steig ein — Der Aufruf', zeit: '~1:30',
+          bild: 'Riesiges „STEIG EIN.". Zwei Karten (Für Salzburg & seine Menschen / Für Unternehmen & Institutionen), die nächsten Signale, und das Kolophon.',
+          text: [
+            '1920 fuhr hier der erste Zug. 2026 fährt der letzte. Was danach kommt, entscheidet diese Stadt — jetzt.',
+            'Für die Menschen dieser Stadt heißt das: ein grünes Band statt einer rostenden Narbe. Promenade, Radweg, Märkte, Kultur, die allen gehören — und ein Ort, an dem die Kinder dieser Stadt sehen, dass man hier gründen kann und bleiben. Für Unternehmen und Institutionen heißt es: ein physischer Fuß im Innovationsstrom und die edelste Form der Partnerschaft, eine eigene Station.',
+            'Die nächsten Signale sind klar: den Rechtsstatus der Trasse klären, einen Ankerpartner gewinnen, zwei bis drei Corporate-Paten und eine Uni als Erstpartner — und erst dann die öffentlichen Töpfe.',
+            'Gleis Null ist Salzburgs neues Nervensystem. Die erste europäische Innovationslinie, die sich bewegt. Steigen wir ein.'
+          ],
+          regie: 'Zurück zum Anfangsbild „Nervensystem" — der Kreis schließt sich. Letzten Satz langsam. „Steigen wir ein." als Einladung, nicht als Befehl. Danach Stille — Applaus abwarten.'
+        }
+      ],
+      einwaende: [
+        { frage: 'Wem gehört die Trasse überhaupt — kann man das so einfach machen?', antwort: 'Nein, einfach ist es nicht, aber die Konstellation ist eine Chance: Die Infrastruktur gehört der Anschlussbahnen AG (seit 1977), Stiegl ist Auftraggeber, die SETG betreibt, die Salzburg AG war jahrzehntelang Betreiberin. Mehrere Beteiligte haben ein Interesse an der Weiternutzung statt am Verfall. Der Rechtsstatus ist der erste zu klärende Schritt — bewusst vor allem anderen.' },
+        { frage: 'Ist das nicht wieder nur ein subventioniertes Prestigeprojekt?', antwort: 'Genau umgekehrt. Ein privater Operator muss Break-even erreichen. Öffentliches Geld ist Anschubkapital für den Sprung, nicht Betriebszuschuss. Der Lackmustest: Trägt sich der Ort aus Partner-, Miet- und Eigenerlösen — oder hängt er am Tropf?' },
+        { frage: 'Autonome Fahrzeuge zwischen Fußgängern — ist das nicht gefährlich?', antwort: 'Deshalb gilt: Sicherheit ist Design, nicht Hoffnung. Getrennte Spuren, klare Zeitfenster, abgegrenzte Abschnitte. Mit der Salzburg AG steht ein Partner bereit, der die Strecke betrieblich kennt. Sauber gelöst ist es ein Vorteil, unsauber ein Haftungsrisiko — das entscheidet über Genehmigung.' },
+        { frage: 'Warum die Achse nach China — passt das zur europäischen Souveränität?', antwort: 'Souveränität heißt Dialog, nicht Abschottung. Ein Ort, dessen ganzes Wesen Verbindung ist, würde sich widersprechen, wenn er sich verschließt. Offenheit im Licht, gestützt auf Werte und Transparenz, ist sicherer als Zusammenarbeit im Schatten — gerade in sensiblen Feldern.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
