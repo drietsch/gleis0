@@ -568,6 +568,33 @@ html[data-motion="aus"] *{animation:none !important;transition:none !important}
     </div>
   </section>
 
+  <!-- ============ PODCAST ============ -->
+  <section id="podcast" data-sec data-screen-label="Podcast — Zum Anhören" style="background:#0f0d0a;color:#f4f1ea;padding:120px 7vw 130px;border-top:1px solid rgba(244,241,234,.1)">
+    <div style="max-width:1160px;margin:0 auto">
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;gap:16px;margin-bottom:30px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--akzent,#C33D2E)">· ZUM ANHÖREN</span>
+        <span style="flex:1;height:1px;background:rgba(244,241,234,.18)"></span>
+      </div>
+      <h2 data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .1s,transform .9s cubic-bezier(.22,1,.36,1) .1s;margin:0 0 22px;font-weight:800;font-size:clamp(40px,5.2vw,74px);line-height:1;letter-spacing:-.025em">Die ganze Line —<br>in einer Folge.</h2>
+      <p data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .18s,transform .9s cubic-bezier(.22,1,.36,1) .18s;font-family:Newsreader,serif;font-style:italic;font-size:clamp(19px,2vw,25px);line-height:1.45;color:rgba(244,241,234,.85);max-width:35em;margin:0 0 56px">Wie aus 3,4 Kilometern totem Industriegleis eine europäische Innovationslinie wird — erzählt statt gelesen. Der Konzept-Podcast zum Anhören unterwegs.</p>
+
+      <div data-rv style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .2s,transform .9s cubic-bezier(.22,1,.36,1) .2s;border:1px solid rgba(244,241,234,.2);background:rgba(0,0,0,.35)">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid rgba(244,241,234,.2)">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.26em;color:#f4f1ea;font-weight:600">PODCAST · GLEIS NULL</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--akzent,#C33D2E);animation:blinken 1.4s step-end infinite">● FOLGE 01</span>
+        </div>
+        <div style="padding:30px 24px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:rgba(244,241,234,.5);margin-bottom:12px">DER KONZEPT-PODCAST</div>
+          <div style="font-weight:800;font-size:clamp(22px,2.8vw,34px);line-height:1.12;letter-spacing:-.015em;margin-bottom:24px;max-width:20em">Gleis Null macht Schrott zur Innovationswaffe</div>
+          <audio controls preload="metadata" style="width:100%;display:block">
+            <source src="uploads/Gleis_Null_macht_Schrott_zur_Innovationswaffe.m4a" type="audio/mp4">
+            Dein Browser kann dieses Audio nicht abspielen — <a href="uploads/Gleis_Null_macht_Schrott_zur_Innovationswaffe.m4a" style="color:var(--akzent,#C33D2E)">Folge herunterladen</a>.
+          </audio>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ 13 EINSTIEG ============ -->
   <section id="s9" data-sec data-screen-label="13 Steig ein" style="background:#16130f;color:#f4f1ea;padding:130px 7vw 60px;border-top:1px solid rgba(244,241,234,.14);position:relative;overflow:hidden">
     <div style="max-width:1160px;margin:0 auto">
@@ -644,6 +671,7 @@ class Component extends DCLogic {
     { id: 's6', lbl: 'STATIONEN' },
     { id: 's7', lbl: 'MODELL' },
     { id: 's8', lbl: 'NETZ' },
+    { id: 'podcast', lbl: 'PODCAST' },
     { id: 's9', lbl: 'EINSTIEG' }
   ];
 
