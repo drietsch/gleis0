@@ -586,7 +586,7 @@ html[data-motion="aus"] *{animation:none !important;transition:none !important}
         <div style="padding:30px 24px">
           <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:rgba(244,241,234,.5);margin-bottom:12px">DER KONZEPT-PODCAST</div>
           <div style="font-weight:800;font-size:clamp(22px,2.8vw,34px);line-height:1.12;letter-spacing:-.015em;margin-bottom:24px;max-width:20em">Gleis Null macht Schrott zur Innovationswaffe</div>
-          <audio controls preload="metadata" style="width:100%;display:block">
+          <audio controls="controls" preload="metadata" style="width:100%;display:block;color-scheme:dark">
             <source src="uploads/Gleis_Null_macht_Schrott_zur_Innovationswaffe.m4a" type="audio/mp4">
             Dein Browser kann dieses Audio nicht abspielen — <a href="uploads/Gleis_Null_macht_Schrott_zur_Innovationswaffe.m4a" style="color:var(--akzent,#C33D2E)">Folge herunterladen</a>.
           </audio>
@@ -830,6 +830,21 @@ class Component extends DCLogic {
     if (this._osTimer) clearInterval(this._osTimer);
   }
 }
+</script>
+<script>
+/* Ensure the podcast <audio> keeps its controls attribute even if the
+   template framework re-renders and drops the boolean attribute. */
+(function () {
+  function ensure() {
+    var a = document.querySelector('#podcast audio');
+    if (a && !a.hasAttribute('controls')) a.setAttribute('controls', 'controls');
+  }
+  ensure();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ensure);
+  new MutationObserver(ensure).observe(document.documentElement, {
+    childList: true, subtree: true, attributes: true, attributeFilter: ['controls']
+  });
+})();
 </script>
 </body>
 </html>
